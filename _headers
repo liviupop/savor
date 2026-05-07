@@ -3,6 +3,9 @@
 
 /*
   Link: </sitemap.xml>; rel="sitemap"; type="application/xml"
+  Link: </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"
+  Link: </05-dataset.html>; rel="service-doc"; type="text/html"
+  Link: </robots.txt>; rel="describedby"; type="text/plain"
 
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
@@ -12,3 +15,13 @@
 
 /.well-known/agent-skills/index.json
   Content-Type: application/json; charset=utf-8
+
+/.well-known/agent-skills/*/SKILL.md
+  Content-Type: text/markdown; charset=utf-8
+
+/assets/corpus.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=300
+
+/assets/agent-tools.js
+  Content-Type: application/javascript; charset=utf-8

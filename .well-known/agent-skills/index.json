@@ -1,4 +1,31 @@
 {
   "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
-  "skills": []
+  "version": "0.2.0",
+  "publisher": {
+    "name": "SAVOR",
+    "url": "https://savor.pages.dev/"
+  },
+  "skills": [
+    {
+      "name": "search-recipes",
+      "type": "skill",
+      "description": "Full-text and faceted search over the SAVOR bilingual recipe corpus (Romanian/Italian, c. 1860–1980). Combine free-text query with optional region/period/course/diet/festive filters.",
+      "url": "/.well-known/agent-skills/search-recipes/SKILL.md",
+      "sha256": "9684ab872574349bf48dd2ee6d2936f066a493e15de25a527dc4c03f8ae5368a"
+    },
+    {
+      "name": "get-recipe",
+      "type": "skill",
+      "description": "Fetch a full SAVOR recipe record by persistent id or slug — multilingual titles, summaries, ingredients, region, period, course, diet, festive occasions, source archive, license and PID.",
+      "url": "/.well-known/agent-skills/get-recipe/SKILL.md",
+      "sha256": "94070e7e4c6cca581ef0116006cc5803dce4ed6df1d3e72511ca47fbfe704716"
+    },
+    {
+      "name": "dataset-schema",
+      "type": "skill",
+      "description": "Return the SAVOR-JSON field reference — fields, types, required/optional, and descriptions. Programmatic mirror of /05-dataset.html#fields.",
+      "url": "/.well-known/agent-skills/dataset-schema/SKILL.md",
+      "sha256": "e4ce99bac6dee92c2915e4bdd73a6a94f7c8074f1f80ea00494a2e757dd2d659"
+    }
+  ]
 }

@@ -1,0 +1,312 @@
+{
+  "$schema": "https://savor.pages.dev/.well-known/schemas/savor-recipe@1.0.json",
+  "version": "1.0.0",
+  "generated": "2026-05-07",
+  "recipes": [
+    {
+      "id": "SAV:RO/CLUJ/1934/PLACINTA-VARZA",
+      "no": "0247",
+      "slug": "placinta-varza-ciuperci",
+      "lang_origin": "ro",
+      "title": {
+        "ro": "Plăcintă cu varză și ciuperci",
+        "it": "Sfoglia ripiena di cavolo e funghi",
+        "en": "Cabbage and porcini pie"
+      },
+      "region": { "primary": "Transilvania", "sub": "Cluj" },
+      "period": "interbellico",
+      "period_years": [1918, 1939],
+      "course": "primo",
+      "diet": "vegan",
+      "festive": ["lent", "christmas-eve"],
+      "summary": {
+        "en": "A thin pie of cabbage softened in oil with porcini and parsley, folded into leavened dough and baked to the colour of a November afternoon.",
+        "ro": "Plăcintă subțire de varză călită în ulei, cu hribi și pătrunjel, închisă în foaie dospită și coaptă până capătă culoarea unei după-amiezi de noiembrie.",
+        "it": "Sfoglia sottile di cavolo cotto nell'olio, porcini e prezzemolo, chiusa in pasta lievitata e cotta al forno fino al colore di un pomeriggio di novembre."
+      },
+      "ingredients": [
+        { "qty": "1 kg", "ro": "varză albă", "it": "cavolo bianco", "en": "white cabbage" },
+        { "qty": "200 g", "ro": "ciuperci de pădure", "it": "funghi porcini", "en": "porcini mushrooms" },
+        { "qty": "100 ml", "ro": "ulei de floarea-soarelui", "it": "olio di girasole", "en": "sunflower oil" },
+        { "qty": "2", "ro": "ceapă galbenă", "it": "cipolla dorata", "en": "yellow onion" },
+        { "qty": "500 g", "ro": "făină de grâu", "it": "farina di grano tenero", "en": "wheat flour" },
+        { "qty": "10 g", "ro": "drojdie proaspătă", "it": "lievito di birra", "en": "fresh yeast" }
+      ],
+      "source": {
+        "archive": "Romanian Academy, Cluj-Napoca",
+        "shelfmark": "ms.b3.f47",
+        "recorded": { "place": "Sângeorz", "year": 1934, "by": "Maria P., kitchen-keeper" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-2034",
+      "url": "/04-recipe.html"
+    },
+    {
+      "id": "SAV:RO/MARAMURES/1972/MAMALIGA-CU-BRANZA",
+      "no": "0118",
+      "slug": "mamaliga-cu-branza-si-smantana",
+      "lang_origin": "ro",
+      "title": {
+        "ro": "Mămăligă cu brânză și smântână",
+        "it": "Polenta con formaggio e panna acida",
+        "en": "Cornmeal with sheep cheese and soured cream"
+      },
+      "region": { "primary": "Maramureș", "sub": "Sighet" },
+      "period": "comunist",
+      "period_years": [1947, 1989],
+      "course": "contorno",
+      "diet": "vegetarian",
+      "festive": [],
+      "summary": {
+        "en": "Stiff yellow cornmeal turned out onto a wooden board, broken open with a string, and dressed with crumbled sheep cheese and a spoon of soured cream.",
+        "ro": "Mămăligă vârtoasă răsturnată pe fund de lemn, tăiată cu ața, în straturi cu brânză de oi și o lingură de smântână.",
+        "it": "Polenta soda rovesciata sul tagliere, tagliata col filo, condita con formaggio di pecora sbriciolato e un cucchiaio di panna acida."
+      },
+      "ingredients": [
+        { "qty": "300 g", "ro": "mălai", "it": "farina di mais", "en": "cornmeal" },
+        { "qty": "1.2 l", "ro": "apă", "it": "acqua", "en": "water" },
+        { "qty": "1 lgță", "ro": "sare", "it": "sale", "en": "salt" },
+        { "qty": "200 g", "ro": "brânză de oi", "it": "formaggio di pecora", "en": "sheep cheese" },
+        { "qty": "150 g", "ro": "smântână grasă", "it": "panna acida", "en": "soured cream" }
+      ],
+      "source": {
+        "archive": "USAMV Cluj, Etnografie alimentară",
+        "shelfmark": "EA-1972/IV-118",
+        "recorded": { "place": "Vadu Izei", "year": 1972, "by": "Ileana B., learned from her mother" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-1118",
+      "url": "/03-search.html#mamaliga-cu-branza-si-smantana"
+    },
+    {
+      "id": "SAV:RO/BUCOVINA/1908/SARMALE",
+      "no": "0089",
+      "slug": "sarmale-cu-varza-murata",
+      "lang_origin": "ro",
+      "title": {
+        "ro": "Sarmale în foi de varză murată",
+        "it": "Involtini in foglie di crauti",
+        "en": "Cabbage rolls in soured leaves"
+      },
+      "region": { "primary": "Bucovina", "sub": "Suceava" },
+      "period": "fin de siècle",
+      "period_years": [1880, 1914],
+      "course": "primo",
+      "diet": "omnivore",
+      "festive": ["christmas", "new-year"],
+      "summary": {
+        "en": "Pork and rice rolled into soured cabbage leaves, layered with smoked ribs and bay, simmered slow in a clay pot until the leaves go translucent.",
+        "ro": "Carne de porc și orez învelite în foi de varză murată, așezate în straturi cu coaste afumate și foi de dafin, fierte încet în oală de lut.",
+        "it": "Maiale e riso avvolti in foglie di crauti, stratificati con costine affumicate e alloro, cotti lenti in pentola di coccio finché le foglie diventano translucide."
+      },
+      "ingredients": [
+        { "qty": "1", "ro": "varză murată întreagă", "it": "cavolo intero in salamoia", "en": "whole soured cabbage" },
+        { "qty": "700 g", "ro": "carne de porc tocată", "it": "maiale macinato", "en": "minced pork" },
+        { "qty": "150 g", "ro": "orez", "it": "riso", "en": "rice" },
+        { "qty": "300 g", "ro": "coaste afumate", "it": "costine affumicate", "en": "smoked pork ribs" },
+        { "qty": "2 cepe", "ro": "ceapă", "it": "cipolla", "en": "onion" },
+        { "qty": "q.b.", "ro": "boia, foi de dafin, cimbru", "it": "paprica, alloro, timo", "en": "paprika, bay, thyme" }
+      ],
+      "source": {
+        "archive": "Romanian Academy, Iași",
+        "shelfmark": "ms.r4.f12",
+        "recorded": { "place": "Rădăuți", "year": 1908, "by": "presbiteră Eufrosina, parish notebook" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0089",
+      "url": "/03-search.html#sarmale-cu-varza-murata"
+    },
+    {
+      "id": "SAV:RO/MUNTENIA/1956/CIORBA-PERISOARE",
+      "no": "0312",
+      "slug": "ciorba-de-perisoare",
+      "lang_origin": "ro",
+      "title": {
+        "ro": "Ciorbă de perișoare",
+        "it": "Zuppa acida con polpettine",
+        "en": "Sour soup with meatballs"
+      },
+      "region": { "primary": "Muntenia", "sub": "București" },
+      "period": "comunist",
+      "period_years": [1947, 1989],
+      "course": "primo",
+      "diet": "omnivore",
+      "festive": [],
+      "summary": {
+        "en": "Light sour soup of root vegetables, with small meatballs of pork and rice, finished with borș (fermented wheat-bran liquor) and a fistful of lovage.",
+        "ro": "Ciorbă limpede de zarzavat cu perișoare de porc și orez, acrită cu borș și parfumată cu leuștean.",
+        "it": "Zuppa chiara di ortaggi con polpettine di maiale e riso, acidulata col borș (siero di crusca fermentato) e profumata col levistico."
+      },
+      "ingredients": [
+        { "qty": "500 g", "ro": "carne tocată de porc", "it": "maiale macinato", "en": "minced pork" },
+        { "qty": "100 g", "ro": "orez", "it": "riso", "en": "rice" },
+        { "qty": "2", "ro": "morcovi", "it": "carote", "en": "carrots" },
+        { "qty": "1", "ro": "păstârnac", "it": "pastinaca", "en": "parsnip" },
+        { "qty": "500 ml", "ro": "borș de tărâțe", "it": "borș (siero di crusca)", "en": "wheat-bran borș" },
+        { "qty": "1 leg.", "ro": "leuștean", "it": "levistico", "en": "lovage" }
+      ],
+      "source": {
+        "archive": "RACAI domestic recipes corpus",
+        "shelfmark": "DRC-1956/B-0312",
+        "recorded": { "place": "București, sect. 6", "year": 1956, "by": "Veronica T., factory canteen" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0312",
+      "url": "/03-search.html#ciorba-de-perisoare"
+    },
+    {
+      "id": "SAV:RO/MOLDOVA/1898/COZONAC-NUCA",
+      "no": "0044",
+      "slug": "cozonac-cu-nuca",
+      "lang_origin": "ro",
+      "title": {
+        "ro": "Cozonac cu nucă",
+        "it": "Pane dolce ripieno alle noci",
+        "en": "Walnut sweet-bread"
+      },
+      "region": { "primary": "Moldova", "sub": "Iași" },
+      "period": "fin de siècle",
+      "period_years": [1880, 1914],
+      "course": "dolce",
+      "diet": "vegetarian",
+      "festive": ["christmas", "easter"],
+      "summary": {
+        "en": "An enriched yeasted loaf, swirled with walnuts ground with sugar and rum and rose-water, baked dark and torn open warm.",
+        "ro": "Pâine dospită îmbogățită cu unt și ouă, cu inimă de nucă măcinată cu zahăr, rom și apă de trandafiri, coaptă brună și ruptă caldă.",
+        "it": "Pane lievitato arricchito con burro e uova, cuore di noci macinate con zucchero, rum e acqua di rose, cotto scuro e spezzato caldo."
+      },
+      "ingredients": [
+        { "qty": "1 kg", "ro": "făină", "it": "farina", "en": "flour" },
+        { "qty": "6", "ro": "ouă", "it": "uova", "en": "eggs" },
+        { "qty": "200 g", "ro": "unt topit", "it": "burro fuso", "en": "melted butter" },
+        { "qty": "200 g", "ro": "zahăr", "it": "zucchero", "en": "sugar" },
+        { "qty": "300 g", "ro": "miez de nucă", "it": "gherigli di noce", "en": "walnut meats" },
+        { "qty": "30 g", "ro": "drojdie", "it": "lievito", "en": "yeast" },
+        { "qty": "1 lg.", "ro": "rom", "it": "rum", "en": "rum" }
+      ],
+      "source": {
+        "archive": "Romanian Academy, Iași",
+        "shelfmark": "ms.m2.f08",
+        "recorded": { "place": "Târgu Frumos", "year": 1898, "by": "Saveta C., baker" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0044",
+      "url": "/03-search.html#cozonac-cu-nuca"
+    },
+    {
+      "id": "SAV:IT/VENETO/1865/RISI-E-BISI",
+      "no": "0521",
+      "slug": "risi-e-bisi",
+      "lang_origin": "it",
+      "title": {
+        "it": "Risi e bisi",
+        "ro": "Orez cu mazăre verde, după Veneția",
+        "en": "Venetian rice and peas"
+      },
+      "region": { "primary": "Veneto", "sub": "Venezia" },
+      "period": "post-unification",
+      "period_years": [1861, 1900],
+      "course": "primo",
+      "diet": "vegetarian",
+      "festive": ["easter", "st-mark"],
+      "summary": {
+        "en": "A loose rice-and-pea soup, halfway between risotto and minestra, traditionally offered to the doge on the Feast of St Mark.",
+        "it": "Minestra di riso e piselli, a metà strada fra risotto e zuppa, tradizionalmente offerta al doge il giorno di San Marco.",
+        "ro": "Supă moale de orez cu mazăre verde, între risotto și ciorbă, oferită odinioară dogelui în ziua Sf. Marcu."
+      },
+      "ingredients": [
+        { "qty": "300 g", "it": "riso vialone nano", "ro": "orez vialone nano", "en": "vialone nano rice" },
+        { "qty": "500 g", "it": "piselli freschi", "ro": "mazăre verde proaspătă", "en": "fresh peas in pod" },
+        { "qty": "100 g", "it": "pancetta", "ro": "kaiser de porc", "en": "pancetta" },
+        { "qty": "1 l", "it": "brodo vegetale", "ro": "supă de zarzavat", "en": "vegetable broth" },
+        { "qty": "50 g", "it": "parmigiano", "ro": "parmezan", "en": "parmesan" },
+        { "qty": "1 leg.", "it": "prezzemolo", "ro": "pătrunjel", "en": "parsley" }
+      ],
+      "source": {
+        "archive": "Casa Artusi, biblioteca",
+        "shelfmark": "CA-veneto-1865-021",
+        "recorded": { "place": "Venezia, Cannaregio", "year": 1865, "by": "ms. ricettario familiare Tron" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0521",
+      "url": "/03-search.html#risi-e-bisi"
+    },
+    {
+      "id": "SAV:IT/LAZIO/1899/PASTA-CECI",
+      "no": "0608",
+      "slug": "pasta-e-ceci",
+      "lang_origin": "it",
+      "title": {
+        "it": "Pasta e ceci alla romana",
+        "ro": "Paste cu năut, după rețeta romană",
+        "en": "Roman pasta and chickpeas"
+      },
+      "region": { "primary": "Lazio", "sub": "Roma" },
+      "period": "post-unification",
+      "period_years": [1861, 1900],
+      "course": "primo",
+      "diet": "vegetarian",
+      "festive": ["lent"],
+      "summary": {
+        "en": "A thick pasta-and-chickpea pottage seasoned with rosemary and a bruised garlic clove fished out before serving — Wednesday and Friday food in the Roman ghetto.",
+        "it": "Minestra densa di pasta e ceci con rosmarino e uno spicchio d'aglio schiacciato che si toglie prima di servire — piatto del mercoledì e del venerdì nel ghetto romano.",
+        "ro": "Mâncare groasă de paste cu năut, parfumată cu rozmarin și un cățel de usturoi strivit, scos înainte de servit — fel de miercuri și vineri în ghetoul roman."
+      },
+      "ingredients": [
+        { "qty": "300 g", "it": "ceci secchi", "ro": "năut uscat", "en": "dried chickpeas" },
+        { "qty": "200 g", "it": "ditalini", "ro": "ditalini (paste scurte)", "en": "ditalini pasta" },
+        { "qty": "2", "it": "spicchi d'aglio", "ro": "căței de usturoi", "en": "garlic cloves" },
+        { "qty": "1 rametto", "it": "rosmarino", "ro": "rozmarin", "en": "rosemary" },
+        { "qty": "4 lg.", "it": "olio extravergine", "ro": "ulei de măsline extravirgin", "en": "extra-virgin olive oil" },
+        { "qty": "q.b.", "it": "sale, pepe", "ro": "sare, piper", "en": "salt, pepper" }
+      ],
+      "source": {
+        "archive": "Casa Artusi, biblioteca",
+        "shelfmark": "CA-lazio-1899-008",
+        "recorded": { "place": "Roma, Trastevere", "year": 1899, "by": "ms. ricettario osteria Sora Lella" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0608",
+      "url": "/03-search.html#pasta-e-ceci"
+    },
+    {
+      "id": "SAV:IT/TRENTINO/1922/STRUDEL-MELE",
+      "no": "0455",
+      "slug": "strudel-di-mele",
+      "lang_origin": "it",
+      "title": {
+        "it": "Strudel di mele",
+        "ro": "Ștrudel cu mere",
+        "en": "Apple strudel"
+      },
+      "region": { "primary": "Trentino-Alto Adige", "sub": "Bolzano" },
+      "period": "interbellico",
+      "period_years": [1918, 1939],
+      "course": "dolce",
+      "diet": "vegetarian",
+      "festive": [],
+      "summary": {
+        "en": "Apple, raisin, pine-nut and cinnamon filling rolled inside a paper-thin sheet of dough stretched on a floured cloth, baked golden and dusted with sugar.",
+        "it": "Mele, uvetta, pinoli e cannella avvolti in una sfoglia tirata sottile come carta su un panno infarinato, cotti dorati e spolverati di zucchero.",
+        "ro": "Umplutură de mere cu stafide, pin și scorțișoară, învelită în foaie întinsă subțire ca o hârtie pe pânză înfăinată, coaptă aurie și pudrată cu zahăr."
+      },
+      "ingredients": [
+        { "qty": "6", "it": "mele renette", "ro": "mere renete", "en": "renette apples" },
+        { "qty": "300 g", "it": "farina 00", "ro": "făină 000", "en": "soft wheat flour" },
+        { "qty": "80 g", "it": "uvetta", "ro": "stafide", "en": "raisins" },
+        { "qty": "50 g", "it": "pinoli", "ro": "semințe de pin", "en": "pine nuts" },
+        { "qty": "100 g", "it": "zucchero", "ro": "zahăr", "en": "sugar" },
+        { "qty": "1 lgță", "it": "cannella", "ro": "scorțișoară", "en": "cinnamon" },
+        { "qty": "60 g", "it": "burro fuso", "ro": "unt topit", "en": "melted butter" }
+      ],
+      "source": {
+        "archive": "Casa Artusi, biblioteca",
+        "shelfmark": "CA-trentino-1922-014",
+        "recorded": { "place": "Bolzano", "year": 1922, "by": "ms. ricettario famiglia Pichler" }
+      },
+      "license": "CC BY-SA 4.0",
+      "pid": "echoes:rd-0455",
+      "url": "/03-search.html#strudel-di-mele"
+    }
+  ]
+}

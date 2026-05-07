@@ -38,6 +38,22 @@ When adding a page, link `assets/savor.css`, then reach for the existing primiti
 
 `<deck-stage>` is a self-contained web component used only by `06-deck.html`. It renders a fixed 1920×1080 canvas of `<section>` slides, auto-scaling to fit the viewport, with keyboard nav, a slidechange CustomEvent, speaker-notes JSON, and a print stylesheet that yields one-slide-per-page PDFs. Slides are hidden (not unmounted) on nav, so iframe/video/form state survives. The header comment in `assets/deck-stage.js` is the API reference — read it before modifying deck behavior.
 
+### Agent layer (`assets/agent-tools.js` + `assets/corpus.json` + `.well-known/agent-skills/`)
+
+The site exposes a small WebMCP tool surface so AI agents can query the corpus client-side. Three layers, all hand-edited, no build step:
+
+1. **Corpus** (`assets/corpus.json`) — the bilingual recipe sample, currently 8 records. Each record's data shape is mirrored by what `04-recipe.html` renders for one specific recipe. Keep them congruent: if you add a record here, the recipe-page template should be able to render it; if you change the field reference in `05-dataset.html#fields`, mirror it in the `DATASET_SCHEMA` constant in `agent-tools.js`.
+2. **Tools** (`assets/agent-tools.js`) — registers four tools (`search-recipes`, `get-recipe`, `list-facets`, `get-dataset-schema`) against `navigator.modelContext.provideContext()` (WebMCP draft). Feature-detected; safe to load on browsers without WebMCP. Loaded on `02-website`, `03-search`, `04-recipe`, `05-dataset` (not `01-design-system` or `06-deck` — those aren't agent surfaces). Also exposes `window.__savor` for debugging.
+3. **Skill discovery** (`.well-known/agent-skills/`) — three SKILL.md files (one per top-level skill) plus an `index.json` per Agent Skills Discovery RFC v0.2.0. The index references each SKILL.md by URL **and a sha256 digest of the file contents**.
+
+**Publish-time chore — re-hash skills.** If you edit any `.well-known/agent-skills/*/SKILL.md`, recompute its sha256 and update `.well-known/agent-skills/index.json`. One-liner:
+
+```bash
+cd .well-known/agent-skills && for f in */SKILL.md; do echo "$f $(shasum -a 256 "$f" | awk '{print $1}')"; done
+```
+
+Tools and skills are intentionally a small set. Adding a new tool is: implement it in `agent-tools.js`, write a `<name>/SKILL.md`, add an entry to `index.json` with the sha256, and link it via the `Link: rel="agent-skills"` header in `_headers` (already in place — no change needed for additional skills).
+
 ### Assets
 
 - `assets/` — production assets shipped with the site (logos, css, deck JS).
@@ -49,10 +65,10 @@ When adding a page, link `assets/savor.css`, then reach for the existing primiti
 These live at the repo root and ship as-is:
 
 - `_redirects` — Cloudflare Pages redirects (root → `02-website.html`).
-- `_headers` — Cloudflare Pages response headers. Sets `Link: </sitemap.xml>; rel="sitemap"` on every URL and forces correct `Content-Type` on the metadata files below.
+- `_headers` — Cloudflare Pages response headers. Sets `Link` on every URL pointing at `sitemap`, `agent-skills`, `service-doc` (= `/05-dataset.html`) and `describedby` (= `/robots.txt`); forces correct `Content-Type` on the JSON/Markdown metadata files.
 - `robots.txt` — RFC 9309 crawl rules with explicit entries for AI crawlers (GPTBot, ClaudeBot, Google-Extended, etc.) and a Content-Signal directive (`ai-train=yes, search=yes, ai-input=yes`). Sitemap line uses an absolute URL (`https://savor.pages.dev/sitemap.xml`).
 - `sitemap.xml` — canonical URL list. **When publishing a content change, bump `<lastmod>` on the affected URL** (and add a `<url>` entry if you added a new HTML page).
-- `.well-known/agent-skills/index.json` — Agent Skills Discovery (RFC v0.2.0) index. Currently `skills: []` because the site exposes no agent-callable tools; populate it if/when WebMCP or hosted skills are added.
+- `.well-known/agent-skills/` — Agent Skills Discovery (RFC v0.2.0). `index.json` references three populated skills, each backed by a `<name>/SKILL.md`. See the Agent layer section above for the publish-time hashing chore.
 
 The canonical base URL is hard-coded as `https://savor.pages.dev` in `robots.txt` and `sitemap.xml`. If a custom domain is wired up, do a find-and-replace across both files.
 

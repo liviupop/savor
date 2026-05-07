@@ -1,0 +1,15 @@
+.DS_Store
+
+# Local tooling state
+.playwright-mcp/
+.wrangler/
+
+# Local verification screenshots
+website-white-header.png
+website-header-clean.png
+search-white-header.png
+search-header-clean.png
+dataset-header-clean.png
+identity-page-updated.png
+recipe-chip-style.png
+montserrat-home.png

@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SAVOR — A correspondence with the corpus</title>
+<link rel="stylesheet" href="assets/savor.css" />
+<style>
+  body { background: var(--paper); }
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: var(--s-7) var(--s-6) var(--s-9);
+  }
+
+  .preamble {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--s-6);
+    margin-bottom: var(--s-7);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--s-6);
+  }
+  .preamble h1 {
+    font-family: var(--serif);
+    font-weight: 380;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-variation-settings: "opsz" 96, "SOFT" 50;
+  }
+  .preamble h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+    font-variation-settings: "opsz" 96, "SOFT" 100;
+  }
+  .preamble p { margin: 12px 0 0; max-width: 560px; }
+  .preamble .session {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.6;
+  }
+  .preamble .session strong { color: var(--ink); }
+
+  /* The letters */
+  .letters {
+    display: grid;
+    gap: var(--s-7);
+  }
+
+  .letter {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--s-6);
+    position: relative;
+  }
+
+  .letter .speaker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    text-align: right;
+  }
+  .letter .speaker .role { display: block; color: var(--ink); font-weight: 600; }
+  .letter .speaker .when { display: block; margin-top: 4px; font-size: 10px; opacity: 0.7; }
+
+  .letter .body {
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+  }
+
+  /* User letter — italic serif, like a handwritten note transcribed */
+  .letter.from-you .body p {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.4;
+    font-style: italic;
+    font-weight: 350;
+    color: var(--ink);
+    margin: 0;
+    max-width: 620px;
+    font-variation-settings: "opsz" 36, "SOFT" 60;
+  }
+  .letter.from-you .speaker .role { color: var(--terracotta); }
+
+  /* SAVOR letter — paper card */
+  .letter.from-savor .body {
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    border-top: 1px solid var(--ink);
+    padding: var(--s-6);
+  }
+  .letter.from-savor .salutation {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0 0 var(--s-4);
+    font-weight: 400;
+  }
+  .letter.from-savor .salutation em { font-style: italic; }
+
+  .letter.from-savor .findings {
+    margin: var(--s-5) 0;
+    border-top: 1px dotted var(--rule);
+    border-bottom: 1px dotted var(--rule);
+    padding: var(--s-4) 0;
+  }
+  .finding {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: var(--s-4);
+    padding: var(--s-3) 0;
+    align-items: baseline;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .finding:last-child { border-bottom: none; }
+  .finding .nn {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 350;
+    color: var(--terracotta);
+    font-variation-settings: "opsz" 24;
+  }
+  .finding .which {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .finding .which a { color: var(--ink); border: none; }
+  .finding .which a:hover { color: var(--terracotta); }
+  .finding .which .it {
+    display: block;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .finding .gloss {
+    font-size: 13px;
+    color: var(--ink-2);
+    margin-top: 6px;
+    line-height: 1.5;
+    max-width: 520px;
+  }
+  .finding .meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+  .finding .meta .score { color: var(--terracotta); }
+
+  .letter.from-savor .closing {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--ink-2);
+  }
+  .letter.from-savor .closing em { font-style: italic; }
+
+  .letter.from-savor .signoff {
+    margin-top: var(--s-5);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .letter.from-savor .signoff .stamp {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--terracotta);
+  }
+
+  /* aside / margin notes around the second letter */
+  .letter .aside {
+    position: absolute;
+    right: -180px;
+    top: 60px;
+    width: 160px;
+    font-family: var(--hand-scholar);
+    font-size: 18px;
+    color: var(--aubergine);
+    line-height: 1.2;
+    transform: rotate(-1deg);
+  }
+  .letter .aside .line {
+    position: absolute;
+    top: -8px; left: -32px;
+    width: 24px; height: 1px;
+    background: var(--aubergine);
+    opacity: 0.5;
+  }
+
+  /* compose box at the bottom */
+  .compose {
+    margin-top: var(--s-9);
+    border: 1px solid var(--ink);
+    background: var(--bone);
+    padding: var(--s-5);
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: var(--s-5);
+    align-items: end;
+  }
+  .compose .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ink);
+    text-align: right;
+  }
+  .compose textarea {
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    padding: 12px 0;
+    min-height: 56px;
+    font-weight: 350;
+  }
+  .compose textarea::placeholder { color: var(--ink-soft); }
+  .compose .send-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 20px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .compose .send-btn:hover { background: var(--terracotta); }
+
+  /* refinements / suggestions row */
+  .suggest {
+    margin-top: var(--s-5);
+    padding-top: var(--s-4);
+    border-top: 1px dotted var(--rule);
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--s-5);
+    align-items: start;
+  }
+  .suggest .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+    padding-top: 4px;
+  }
+  .suggest .opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .suggest .opts a {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-2);
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 6px 12px;
+  }
+  .suggest .opts a:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* facets sidebar — the corpus' way of telling you what it's filtering on */
+  .filters-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--paper-3);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+  }
+
+  /* connector ornament between letters */
+  .ornament {
+    text-align: center;
+    color: var(--rule);
+    font-family: var(--serif);
+    font-size: 24px;
+    letter-spacing: 0.5em;
+    padding: 0;
+    line-height: 0;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="02-website.html" class="brand" data-page-label="/ Search">
+    <img src="uploads/logo_savor_black.svg" alt="SAVOR" />
+  </a>
+  <div class="links only-nav">
+    <a href="02-website.html">Corpus</a>
+    <a href="03-search.html" class="active">Search</a>
+    <a href="04-recipe.html">A recipe</a>
+    <a href="05-dataset.html">Dataset</a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <div class="preamble">
+    <div>
+      <span class="eyebrow">Semantic search · in correspondence</span>
+      <div class="spacer-7" style="height: 16px;"></div>
+      <h1>A <em>conversation</em> with three thousand recipes.</h1>
+      <p class="lede" style="margin-top: 14px;">Write to SAVOR in plain language. It will reply with recipes from the corpus, citations to the manuscript, and the occasional aside from the cooks, scholars, and translators who know them.</p>
+    </div>
+    <div class="session">
+      <strong>Session 04F·2026</strong>
+      <span class="when">Started 13:42 EET</span>
+      <span class="when">3 letters · 11 recipes</span>
+    </div>
+  </div>
+
+  <div class="letters">
+
+    <!-- LETTER 1 — user -->
+    <article class="letter from-you">
+      <div class="speaker">
+        <span class="role">You</span>
+        <span class="when">13:42</span>
+      </div>
+      <div class="body">
+        <p>Christmas Eve in a Transylvanian village, no meat, something my grandmother might have made. Bonus points for cabbage.</p>
+      </div>
+    </article>
+
+    <!-- LETTER 2 — SAVOR replies -->
+    <article class="letter from-savor">
+      <div class="speaker">
+        <span class="role" style="color: var(--terracotta);">SAVOR</span>
+        <span class="when">13:42</span>
+      </div>
+      <div class="body">
+        <p class="salutation">
+          Dear cook, — Christmas Eve fasts hard in the Romanian tradition, so I've held back anything with meat or dairy. From the corpus I'm reading you four candidates from <em>Transylvania, interwar period</em>, all marked <em>de post</em>. The cabbage is well-represented.
+        </p>
+
+        <div class="findings">
+          <div class="finding">
+            <div class="nn">i.</div>
+            <div class="which">
+              <a href="04-recipe.html">Sarmale de post cu varză murată</a>
+              <span class="it">Involtini di Quaresima al cavolo fermentato</span>
+              <div class="gloss">Fermented cabbage rolls filled with rice, mushrooms, walnuts, and dill — slow-simmered with smoked plum brine. The form your grandmother would recognise.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.91</div>
+              ms.b3.f47<br>cluj · 1934
+            </div>
+          </div>
+
+          <div class="finding">
+            <div class="nn">ii.</div>
+            <div class="which">
+              <a href="04-recipe.html">Plăcintă cu varză și ciuperci</a>
+              <span class="it">Sfoglia ripiena di cavolo e funghi</span>
+              <div class="gloss">A thin pie of cabbage softened in oil with porcini, parsley, black pepper. Folded and baked, served warm in slices.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.87</div>
+              ms.b1.f12<br>sibiu · 1928
+            </div>
+          </div>
+
+          <div class="finding">
+            <div class="nn">iii.</div>
+            <div class="which">
+              <a href="04-recipe.html">Salată de varză murată cu mere și nucă</a>
+              <span class="it">Insalata di cavolo, mela e noci</span>
+              <div class="gloss">A side that earns its place: brined cabbage thinly cut, sweet apple, walnuts, sunflower oil — the cold, sharp counterweight to anything warm and starchy.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.84</div>
+              ms.b3.f51<br>cluj · 1934
+            </div>
+          </div>
+
+          <div class="finding">
+            <div class="nn">iv.</div>
+            <div class="which">
+              <a href="04-recipe.html">Bob fiert cu sos de hrean</a>
+              <span class="it">Fave lessate con salsa al rafano</span>
+              <div class="gloss">Boiled broad beans with horseradish — the older, less-photographed face of Romanian fasting cookery. Almost vanished from contemporary tables.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.79</div>
+              ms.b2.f08<br>turda · 1931
+            </div>
+          </div>
+        </div>
+
+        <p class="closing">
+          A note: the second is the most flexible — you can shift the filling to <em>conopidă și usturoi</em> if cabbage feels overdone by the third course. The fourth is the historian's pick. If you'd like, I can pull the whole 1934 Cluj manuscript's Christmas-Eve menu, which happens to be intact.
+        </p>
+
+        <div class="signoff">
+          <span>your corpus, faithfully</span>
+          <span class="stamp">SAVOR</span>
+          <span>filtered: post · transilvania · ≤ 1945</span>
+        </div>
+      </div>
+
+      <!-- a marginalia note from a scholar — appearing alongside this reply -->
+      <aside class="aside">
+        <span class="line"></span>
+        cf. ms. Cluj-N b3,<br>f.47 — the<br>same hand as<br>recipe i, iii.
+      </aside>
+    </article>
+
+    <div class="ornament">◇ &nbsp; ◇ &nbsp; ◇</div>
+
+    <!-- LETTER 3 — user follows up -->
+    <article class="letter from-you">
+      <div class="speaker">
+        <span class="role">You</span>
+        <span class="when">13:46</span>
+      </div>
+      <div class="body">
+        <p>The plăcintă — is there an Italian counterpart? I'm thinking about how to set them side by side at a dinner.</p>
+      </div>
+    </article>
+
+    <!-- LETTER 4 — SAVOR cross-language -->
+    <article class="letter from-savor">
+      <div class="speaker">
+        <span class="role" style="color: var(--terracotta);">SAVOR</span>
+        <span class="when">13:47</span>
+      </div>
+      <div class="body">
+        <p class="salutation">
+          A good question. The cabbage-and-mushroom <em>plăcintă</em> sits very close, in the embedding space, to two Italian sfoglia from the Artusi corpus and one from the Romagnola tradition. The shared vocabulary is <span class="filters-pill">cabbage</span> <span class="filters-pill">leaven dough</span> <span class="filters-pill">slow-bake</span>. Distances are cross-lingual cosine, LaBSE.
+        </p>
+
+        <div class="findings">
+          <div class="finding">
+            <div class="nn">i.</div>
+            <div class="which">
+              <a href="04-recipe.html">Erbazzone di Reggio</a>
+              <span class="it">Plăcintă cu verdețuri, în stil Reggio</span>
+              <div class="gloss">A flat sfoglia of chard, onion, garlic, pancetta — Artusi's recipe 196 with its modern Reggiana revisions. Drop the pancetta for a Lenten reading.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.83</div>
+              artusi · 196<br>emilia
+            </div>
+          </div>
+
+          <div class="finding">
+            <div class="nn">ii.</div>
+            <div class="which">
+              <a href="04-recipe.html">Torta di cavolo verza</a>
+              <span class="it">Plăcintă cu varză creață</span>
+              <div class="gloss">A rustic torta from the Romagna hills — savoy cabbage long-stewed with onion, encased in a thick-rolled pasta sfoglia. The closest formal cousin to your plăcintă.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.81</div>
+              ca-suppl · 14<br>romagna
+            </div>
+          </div>
+
+          <div class="finding">
+            <div class="nn">iii.</div>
+            <div class="which">
+              <a href="04-recipe.html">Crescentina ripiena</a>
+              <span class="it">Lipie umplută cu varză</span>
+              <div class="gloss">A small fried-dough pocket; not a sfoglia exactly, but if you want a one-bite version on a long table, this is the form.</div>
+            </div>
+            <div class="meta">
+              <div class="score">0.76</div>
+              artusi · 222<br>bologna
+            </div>
+          </div>
+        </div>
+
+        <p class="closing">
+          For a paired dinner I'd serve the Erbazzone alongside the Romanian <em>plăcintă cu varză și ciuperci</em>: same form, same season, two languages and two centuries apart. Casa Artusi has photographs of the Erbazzone in its archive — I can attach the IIIF link to your reading list if useful.
+        </p>
+
+        <div class="signoff">
+          <span>cross-lingual · LaBSE · cosine</span>
+          <span class="stamp">SAVOR</span>
+          <span>filtered: erbazzone-cluster · ≤ 1900</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Compose -->
+  <form class="compose" onsubmit="event.preventDefault();">
+    <div class="label">
+      Reply to<br>SAVOR
+    </div>
+    <textarea placeholder="Tell me more about the 1934 Cluj manuscript, or ask about a different region…"></textarea>
+    <button class="send-btn" type="submit">Send →</button>
+  </form>
+
+  <div class="suggest">
+    <div class="lab">If you're stuck</div>
+    <div class="opts">
+      <a href="#"><em>Show me what's in season in November</em></a>
+      <a href="#"><em>Compare Romanian and Italian Easter breads</em></a>
+      <a href="#"><em>Recipes that use only five ingredients</em></a>
+      <a href="#"><em>Dishes that disappear after 1945</em></a>
+      <a href="#"><em>Dolci che usano la polenta</em></a>
+    </div>
+  </div>
+
+  <!-- session footer -->
+  <div style="margin-top: var(--s-9); padding-top: var(--s-5); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);">
+    <span>Session saved · download as .md or .json</span>
+    <span>Embeddings: LaBSE · Index: FAISS · Endpoint: api.savor.eu/v1/converse</span>
+    <span>Privacy: queries logged anonymously for 30 days</span>
+  </div>
+
+</main>
+
+</body>
+</html>

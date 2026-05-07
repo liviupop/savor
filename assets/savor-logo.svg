@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 160" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-label="SAVOR">
+  
+  <path d="M 130 38&#xA;           C 100 28, 50 30, 40 60&#xA;           C 32 86, 80 92, 100 100&#xA;           C 124 110, 130 130, 110 142&#xA;           C 90 154, 50 152, 28 138"></path>
+
+  
+  
+  <path d="M 192 38&#xA;           L 168 142&#xA;           Q 168 148, 174 148&#xA;           L 232 148&#xA;           Q 238 148, 238 142&#xA;           L 214 38&#xA;           Q 213 34, 209 34&#xA;           L 197 34&#xA;           Q 193 34, 192 38 Z"></path>
+  
+  <path d="M 188 38 L 218 38"></path>
+  
+  <circle cx="197" cy="62" r="1.6" fill="currentColor" stroke="none"></circle>
+  <circle cx="206" cy="58" r="1.6" fill="currentColor" stroke="none"></circle>
+  <circle cx="215" cy="62" r="1.6" fill="currentColor" stroke="none"></circle>
+  
+  <path d="M 180 96 L 226 96"></path>
+
+  
+  <path d="M 268 34 L 314 148 L 360 34"></path>
+
+  
+  <ellipse cx="438" cy="91" rx="58" ry="57"></ellipse>
+
+  
+  <path d="M 540 148 L 540 34 L 600 34&#xA;           Q 632 34, 632 64&#xA;           Q 632 92, 600 92&#xA;           L 540 92&#xA;           M 600 92 L 644 148"></path>
+</svg>

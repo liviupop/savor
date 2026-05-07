@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plăcintă cu varză și ciuperci — SAVOR</title>
+<link rel="stylesheet" href="assets/savor.css" />
+<style>
+  body { background: var(--paper); }
+  .recipe-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--s-7) var(--s-6) var(--s-9);
+    display: grid;
+    grid-template-columns: 1fr 720px 1fr;
+    gap: var(--s-6);
+  }
+  .gutter-left, .gutter-right {
+    position: relative;
+    padding-top: var(--s-7);
+  }
+
+  /* Title block */
+  .recipe-head {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--ink);
+    padding-top: var(--s-5);
+    margin-bottom: var(--s-7);
+    display: grid;
+    grid-template-columns: 1fr 720px 1fr;
+    gap: var(--s-6);
+    align-items: start;
+  }
+  .recipe-head .head-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    text-align: right;
+    padding-right: var(--s-3);
+  }
+  .recipe-head .head-meta strong { color: var(--ink); display: block; font-size: 10px; }
+  .recipe-head .titles { text-align: center; }
+  .recipe-head .titles .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: var(--s-3);
+  }
+  .recipe-head .titles h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 380;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  .recipe-head .titles .title-it {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-soft);
+    margin-top: var(--s-3);
+    font-weight: 350;
+    font-variation-settings: "opsz" 36, "SOFT" 80;
+  }
+  .recipe-head .titles .chips-row {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    margin-top: var(--s-5);
+  }
+
+  .recipe-head .head-meta.right { text-align: left; padding-left: var(--s-3); padding-right: 0; }
+
+  /* Body */
+  .recipe-body {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+  .recipe-body .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    padding-top: var(--s-3);
+    margin-top: var(--s-7);
+    margin-bottom: var(--s-4);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .recipe-body .lede {
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    margin: 0 0 var(--s-6);
+    font-weight: 350;
+    font-variation-settings: "opsz" 36, "SOFT" 80;
+  }
+  .recipe-body .lede::first-letter {
+    font-size: 3.6em;
+    float: left;
+    line-height: 0.85;
+    margin: 6px 10px 0 -2px;
+    font-weight: 400;
+    color: var(--terracotta);
+    font-style: normal;
+  }
+
+  .ingredients {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-count: 2;
+    column-gap: var(--s-7);
+  }
+  .ingredients li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: var(--s-4);
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 16px;
+    break-inside: avoid;
+  }
+  .ingredients li .qty { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding-top: 2px; }
+  .ingredients li .what { color: var(--ink); }
+  .ingredients li .what em { font-style: italic; color: var(--ink-soft); font-size: 14px; }
+
+  /* Steps */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 0 0 var(--s-6) var(--s-7);
+    margin: 0;
+  }
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0; top: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--terracotta);
+  }
+  .steps li::after {
+    content: "";
+    position: absolute;
+    left: 4px; top: 28px; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+  .steps li:last-child::after { display: none; }
+
+  /* Margin notes — positioned by the gutter */
+  .gutter-note {
+    position: absolute;
+    width: 100%;
+    padding: 0 var(--s-3);
+  }
+  .gutter-note .ref-line {
+    height: 1px;
+    width: 28px;
+    background: currentColor;
+    opacity: 0.3;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .gutter-note .signoff {
+    display: block;
+    font-size: 0.65em;
+    opacity: 0.7;
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .gn-cook {
+    font-family: var(--hand-cook);
+    font-size: 24px;
+    color: var(--terracotta);
+    line-height: 1.2;
+    transform: rotate(-1deg);
+  }
+  .gn-scholar {
+    font-family: var(--hand-scholar);
+    font-size: 24px;
+    color: var(--aubergine);
+    line-height: 1.2;
+    transform: rotate(0.5deg);
+  }
+  .gn-translator {
+    font-family: var(--hand-translator);
+    font-size: 13px;
+    color: var(--indigo);
+    line-height: 1.65;
+  }
+
+  .gutter-right .ref-line { margin-left: 0; }
+  .gutter-left  .ref-line { margin-left: auto; margin-right: 0; }
+  .gutter-left .gutter-note { text-align: right; }
+
+  /* Provenance block */
+  .provenance {
+    grid-column: 1 / -1;
+    margin-top: var(--s-9);
+    padding: var(--s-7);
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--s-7);
+  }
+  .provenance h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 var(--s-3);
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .provenance dl { margin: 0; font-size: 14px; }
+  .provenance dt { font-family: var(--mono); font-size: 10px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; margin-top: var(--s-3); }
+  .provenance dt:first-child { margin-top: 0; }
+  .provenance dd { margin: 4px 0 0; font-family: var(--serif); font-size: 16px; }
+
+  /* Related */
+  .related {
+    grid-column: 1 / -1;
+    margin-top: var(--s-7);
+    padding-top: var(--s-7);
+    border-top: 1px solid var(--rule);
+  }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); margin-top: var(--s-5); }
+  .related a {
+    border: 1px solid var(--rule);
+    background: var(--bone);
+    padding: var(--s-4);
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  .related a:hover { background: var(--paper-2); }
+  .related .why {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+  }
+  .related .ttl {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.15;
+    margin: 8px 0 4px;
+  }
+  .related .it {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  /* JSON peek */
+  .json-peek {
+    grid-column: 1 / -1;
+    margin-top: var(--s-7);
+    padding: var(--s-5);
+    border: 1px solid var(--rule);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-5);
+  }
+  .json-peek .label-side {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper-3);
+    border-right: 1px solid var(--ink-soft);
+    padding-right: var(--s-5);
+  }
+  .json-peek .label-side a {
+    display: block;
+    color: var(--paper);
+    margin-top: 8px;
+    border: none;
+    font-family: var(--serif);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 14px;
+  }
+  .json-peek pre { background: transparent; border: none; padding: 0; color: var(--paper); }
+
+  @media (max-width: 1100px) {
+    .recipe-page, .recipe-head { grid-template-columns: 1fr; }
+    .recipe-head .head-meta, .recipe-head .head-meta.right { text-align: left; padding: 0; }
+    .gutter-left, .gutter-right { display: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="02-website.html" class="brand" data-page-label="/ Recipe">
+    <img src="uploads/logo_savor_black.svg" alt="SAVOR" />
+  </a>
+  <div class="links only-nav">
+    <a href="02-website.html">Corpus</a>
+    <a href="03-search.html">Search</a>
+    <a href="04-recipe.html" class="active">A recipe</a>
+    <a href="05-dataset.html">Dataset</a>
+  </div>
+</nav>
+
+<header class="recipe-head">
+  <div class="head-meta">
+    <strong>Source</strong>
+    Romanian Academy<br>
+    Cluj-N · ms.b3.f47<br>
+    <span style="opacity:0.6">interwar manuscript</span>
+    <br><br>
+    <strong>Recorded</strong>
+    Sângeorz, 1934<br>
+    by Maria P., kitchen-keeper
+  </div>
+  <div class="titles">
+    <div class="num">SAV:RO/CLUJ/1934/PLACINTA-VARZA — Nº 0247</div>
+    <h1>Plăcintă cu varză<br>și ciuperci</h1>
+    <div class="title-it">Sfoglia ripiena di cavolo e funghi</div>
+    <div class="chips-row">
+      <span class="chip region">Transilvania · Cluj</span>
+      <span class="chip period">Interbelic</span>
+      <span class="chip festive">de post · Crăciun</span>
+      <span class="chip course">Fel principal</span>
+      <span class="chip diet">Vegan</span>
+    </div>
+  </div>
+  <div class="head-meta right">
+    <strong>License</strong>
+    CC BY-SA 4.0<br>
+    consent on file
+    <br><br>
+    <strong>Persistent ID</strong>
+    echoes:rd-2034<br>
+    <span style="opacity:0.6">doi.org/10.5281/…</span>
+  </div>
+</header>
+
+<main class="recipe-page">
+
+  <!-- LEFT GUTTER -->
+  <aside class="gutter-left">
+    <div class="gutter-note" style="top: 0;">
+      <div class="gn-scholar">
+        <span class="ref-line"></span>
+        the same hand<br>that wrote i, iii<br>in the Cluj b3 ms.<br>
+        — same kitchen,<br>same winter.
+        <span class="signoff">— C. Mocanu, ed.</span>
+      </div>
+    </div>
+    <div class="gutter-note" style="top: 540px;">
+      <div class="gn-cook">
+        <span class="ref-line"></span>
+        cabbage from autumn,<br>not spring — the leaf<br>is firmer, holds the<br>filling without weeping.
+        <span class="signoff">— bunica</span>
+      </div>
+    </div>
+    <div class="gutter-note" style="top: 1020px;">
+      <div class="gn-translator">
+        <span class="ref-line"></span>
+        „untdelemn" — qui<br>letteralmente "olio<br>di tavola", ma nel<br>contesto interbellico<br>significa olio di girasole<br>o di mais, mai d'oliva.
+        <span class="signoff">— traduttore</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- BODY -->
+  <article class="recipe-body">
+    <p class="lede">
+      A thin pie of cabbage softened in oil with porcini and parsley, folded into a sheet of leavened dough and baked to a colour the manuscript calls "the colour of a November afternoon." Served warm in slices, it carries the Eve into the night.
+    </p>
+
+    <div class="section-label">
+      <span>Ingrediente · Ingredienti</span>
+      <span>per 8 persone</span>
+    </div>
+
+    <ul class="ingredients">
+      <li><span class="qty">1 kg</span><span class="what">varză albă <em>cavolo bianco</em></span></li>
+      <li><span class="qty">200 g</span><span class="what">ciuperci de pădure <em>funghi porcini</em></span></li>
+      <li><span class="qty">100 ml</span><span class="what">ulei de floarea-soarelui <em>olio di girasole</em></span></li>
+      <li><span class="qty">2 cepe</span><span class="what">ceapă galbenă <em>cipolla dorata</em></span></li>
+      <li><span class="qty">1 leg.</span><span class="what">pătrunjel verde <em>prezzemolo</em></span></li>
+      <li><span class="qty">q.b.</span><span class="what">sare, piper negru <em>sale, pepe nero</em></span></li>
+      <li><span class="qty">500 g</span><span class="what">făină de grâu <em>farina di grano tenero</em></span></li>
+      <li><span class="qty">10 g</span><span class="what">drojdie proaspătă <em>lievito di birra</em></span></li>
+      <li><span class="qty">300 ml</span><span class="what">apă călduță <em>acqua tiepida</em></span></li>
+      <li><span class="qty">1 lg.</span><span class="what">oțet de mere <em>aceto di mele</em></span></li>
+    </ul>
+
+    <div class="section-label">
+      <span>Mod de pregătire · Preparazione</span>
+      <span>~ 2h, plus dospirea</span>
+    </div>
+
+    <ol class="steps">
+      <li>Tăiați varza fideluță, sărați-o ușor și lăsați-o într-o strecurătoare circa 30 de minute, până își lasă apa. Stoarceți bine cu mâna.</li>
+      <li>Înmuiați ciupercile în apă caldă pentru 20 de minute, apoi tăiați-le mărunt. Păstrați apa de înmuiere — e parfumată.</li>
+      <li>Călitiți ceapa în uleiul cald, până devine sticloasă. Adăugați varza stoarsă și amestecați cu o lingură de lemn până când varza își schimbă culoarea, devenind translucidă.</li>
+      <li>Adăugați ciupercile, două linguri din apa lor de înmuiere, sare, piper și pătrunjelul. Lăsați la foc mic încă cinci minute. Umplutura trebuie să rămână umedă, dar nu apoasă.</li>
+      <li>Frământați aluatul: făină, drojdie dizolvată în apă călduță, oțet, o linguriță de sare. Lucrați-l zece minute, până devine elastic. Lăsați-l să dospească, acoperit, până-și dublează volumul — circa o oră în bucătărie caldă.</li>
+      <li>Întindeți aluatul subțire ca o monedă pe o pânză înfăinată. Așezați umplutura în mijloc, închideți marginile peste, formând un colăcel pătrat. Așezați-l cu cusătura în jos pe o tavă unsă.</li>
+      <li>Coaceți la cuptor încins (220 °C) pentru 35 — 40 de minute, până capătă culoarea unei după-amiezi de noiembrie. Lăsați să se odihnească 10 minute înainte de a tăia.</li>
+    </ol>
+  </article>
+
+  <!-- RIGHT GUTTER -->
+  <aside class="gutter-right">
+    <div class="gutter-note" style="top: 80px;">
+      <div class="gn-cook">
+        <span class="ref-line"></span>
+        sărarea verzei e<br>secretul — fără asta,<br>plăcinta plânge<br>la cuptor.
+        <span class="signoff">— bunica</span>
+      </div>
+    </div>
+    <div class="gutter-note" style="top: 380px;">
+      <div class="gn-scholar">
+        <span class="ref-line"></span>
+        cf. CoRoLa,<br>occurrences of<br>„a se schimba<br>la culoare" in<br>cookery 1900–1950:<br>n=147, predominant<br>register: domestic.
+        <span class="signoff">— V. Mititelu, ling.</span>
+      </div>
+    </div>
+    <div class="gutter-note" style="top: 800px;">
+      <div class="gn-translator">
+        <span class="ref-line"></span>
+        „dospirea" → italic.<br>"lievitazione" non<br>rende del tutto: il<br>termine romeno<br>implica anche il<br>tempo dell'attesa.
+        <span class="signoff">— traduttore</span>
+      </div>
+    </div>
+    <div class="gutter-note" style="top: 1120px;">
+      <div class="gn-cook">
+        <span class="ref-line"></span>
+        rămâne bună două zile —<br>de fapt, <span class="scribble">a doua zi</span><br>e mai bună.
+        <span class="signoff">— bunica</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- PROVENANCE -->
+  <section class="provenance">
+    <div>
+      <h4>Origine · Provenance</h4>
+      <dl>
+        <dt>Manuscript</dt>
+        <dd>Cluj-N b3, folio 47r — verso annotated</dd>
+        <dt>Hand</dt>
+        <dd>Maria P., kitchen-keeper, Sângeorz</dd>
+        <dt>Recorded</dt>
+        <dd>1934 (winter, dated by an adjacent Christmas-Eve menu)</dd>
+        <dt>Holding</dt>
+        <dd>Romanian Academy, Cluj-Napoca branch</dd>
+      </dl>
+    </div>
+    <div>
+      <h4>Semantic links</h4>
+      <dl>
+        <dt>Region</dt>
+        <dd>Transilvania → <a href="#">geonames:665087</a></dd>
+        <dt>Period</dt>
+        <dd>Interbelic → <a href="#">periodo:p0qhvzd</a></dd>
+        <dt>Festivity</dt>
+        <dd>Ajunul Crăciunului → <a href="#">wd:Q3406641</a></dd>
+        <dt>Diet</dt>
+        <dd>Post (Lenten) → <a href="#">wd:Q1132238</a></dd>
+      </dl>
+    </div>
+    <div>
+      <h4>Nutrition · per slice</h4>
+      <dl>
+        <dt>Energy</dt>
+        <dd>~218 kcal · 912 kJ</dd>
+        <dt>Protein</dt>
+        <dd>5.4 g</dd>
+        <dt>Source</dt>
+        <dd>FAO standard composition tables, validated by USAMV</dd>
+        <dt>Note</dt>
+        <dd>Vegan, contains gluten</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="related">
+    <span class="eyebrow">In the embedding's neighbourhood</span>
+    <h2 class="h-2" style="margin-top: 12px;">Three recipes the corpus thinks of when it thinks of this one.</h2>
+
+    <div class="related-grid">
+      <a href="#">
+        <div class="why">cosine 0.83 · cross-lingual</div>
+        <div class="ttl">Erbazzone di Reggio</div>
+        <div class="it">Plăcintă cu verdețuri, în stil Reggio</div>
+        <p class="small" style="margin-top: 8px;">A flat sfoglia of chard, onion, garlic — Artusi 196. Same form, different leaf.</p>
+      </a>
+      <a href="#">
+        <div class="why">cosine 0.81 · same region</div>
+        <div class="ttl">Sarmale de post cu varză murată</div>
+        <div class="it">Involtini di Quaresima al cavolo fermentato</div>
+        <p class="small" style="margin-top: 8px;">Cluj b3, folio 47v — written by the same hand, three pages later.</p>
+      </a>
+      <a href="#">
+        <div class="why">cosine 0.78 · same season</div>
+        <div class="ttl">Plăcintă cu dovleac</div>
+        <div class="it">Sfoglia ripiena di zucca</div>
+        <p class="small" style="margin-top: 8px;">An autumn cousin — pumpkin where the cabbage would be, sugar where there is none.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- JSON PEEK -->
+  <section class="json-peek">
+    <div class="label-side">
+      Same recipe,<br>as data<br>
+      <a href="05-dataset.html">→ Open in Lab</a>
+    </div>
+    <pre><span class="tk-com">// SAVOR-JSON · /recipes/ro/cluj/1934/placinta-varza-ciuperci.json</span>
+{ <span class="tk-key">"@type"</span>: <span class="tk-str">"Recipe"</span>, <span class="tk-key">"recipeId"</span>: <span class="tk-str">"sav:ro/cluj/1934/placinta-varza-ciuperci"</span>,
+  <span class="tk-key">"name"</span>: { <span class="tk-key">"ro"</span>: <span class="tk-str">"Plăcintă cu varză și ciuperci"</span>, <span class="tk-key">"it"</span>: <span class="tk-str">"Sfoglia ripiena di cavolo e funghi"</span> },
+  <span class="tk-key">"region"</span>: <span class="tk-str">"geonames:665087"</span>, <span class="tk-key">"period"</span>: <span class="tk-str">"periodo:p0qhvzd"</span>,
+  <span class="tk-key">"festive"</span>: [<span class="tk-str">"wd:Q3406641"</span>], <span class="tk-key">"diet"</span>: [<span class="tk-str">"vegan"</span>, <span class="tk-str">"de-post"</span>],
+  <span class="tk-key">"yield"</span>: <span class="tk-num">8</span>, <span class="tk-key">"timeMinutes"</span>: <span class="tk-num">160</span>,
+  <span class="tk-key">"provenance"</span>: <span class="tk-str">"AR-CJ ms.b3.f47r"</span>, <span class="tk-key">"license"</span>: <span class="tk-str">"CC BY-SA 4.0"</span> }</pre>
+  </section>
+
+</main>
+
+</body>
+</html>

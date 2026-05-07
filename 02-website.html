@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SAVOR — A bilingual recipe corpus</title>
+<link rel="stylesheet" href="assets/savor.css" />
+<link rel="icon" href="assets/savor-logo.svg" type="image/svg+xml" />
+<style>
+  .hero {
+    padding: var(--s-8) 0 var(--s-9);
+    position: relative;
+  }
+  .hero .container { display: grid; grid-template-columns: 1.6fr 1fr; gap: var(--s-9); align-items: end; }
+  .hero h1 { margin: 0; }
+  .hero .meta-stack { display: grid; gap: var(--s-5); }
+  .hero .stat { border-top: 1px solid var(--ink); padding-top: var(--s-3); }
+  .hero .stat .num { font-family: var(--serif); font-size: 56px; font-weight: 380; line-height: 1; letter-spacing: -0.02em; }
+  .hero .stat .lab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-top: 6px; }
+
+  .hero-sub {
+    padding: 0 0 var(--s-9);
+  }
+  .hero-sub .container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s-7); align-items: start; }
+  .hero-sub .item .eyebrow { display: block; margin-bottom: var(--s-3); }
+  .hero-sub .item p { margin: 0; max-width: 320px; }
+
+  .dataset-bridge {
+    padding: var(--s-7) 0;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .dataset-bridge .container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-6);
+    align-items: center;
+  }
+  .dataset-bridge h2 {
+    margin: 8px 0 0;
+    max-width: 760px;
+  }
+  .dataset-bridge p {
+    margin: var(--s-3) 0 0;
+    max-width: 640px;
+    color: var(--ink-2);
+  }
+
+  /* The corpus, visualized */
+  .corpus {
+    padding: var(--s-8) 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bone);
+  }
+  .corpus .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-9); align-items: center; }
+  .corpus-viz {
+    display: grid;
+    grid-template-columns: repeat(60, 1fr);
+    gap: 2px;
+  }
+  .corpus-viz span {
+    aspect-ratio: 1;
+    background: var(--paper-3);
+  }
+  .corpus-viz span.it { background: var(--terracotta); }
+  .corpus-viz span.ro-arch { background: var(--aubergine); }
+  .corpus-viz span.ro-stu  { background: var(--ochre); }
+
+  /* Search invitation */
+  .invite {
+    padding: var(--s-9) 0;
+    background: var(--paper);
+  }
+  .invite .container { max-width: 880px; text-align: center; }
+  .invite-form {
+    margin-top: var(--s-6);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border: 1px solid var(--ink);
+    background: var(--bone);
+  }
+  .invite-form input {
+    border: none;
+    background: transparent;
+    padding: 22px 24px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    outline: none;
+    font-weight: 350;
+  }
+  .invite-form input::placeholder { color: var(--ink-soft); }
+  .invite-form button {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0 28px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .invite-form button:hover { background: var(--terracotta); }
+  .invite .examples {
+    margin-top: var(--s-4);
+    display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .invite .examples a {
+    border: 1px solid var(--rule);
+    padding: 6px 12px;
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-style: italic;
+  }
+  .invite .examples a:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* Featured recipes */
+  .featured {
+    padding: var(--s-9) 0;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-6);
+    margin-top: var(--s-7);
+  }
+  .recipe-card {
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    padding: var(--s-6);
+    display: grid;
+    gap: var(--s-4);
+    position: relative;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: none;
+    min-height: 360px;
+  }
+  .recipe-card:hover { background: var(--paper-2); }
+  .recipe-card .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+  .recipe-card .title-ro { font-family: var(--serif); font-size: 30px; line-height: 1.05; letter-spacing: -0.01em; font-weight: 400; }
+  .recipe-card .title-it { font-family: var(--serif); font-size: 18px; line-height: 1.2; color: var(--ink-soft); font-style: italic; font-weight: 350; margin-top: 6px; }
+  .recipe-card .row { gap: 6px; margin-top: auto; }
+  .recipe-card .scribble-cook {
+    position: absolute;
+    top: var(--s-5); right: var(--s-5);
+    font-family: var(--hand-cook);
+    font-size: 22px;
+    color: var(--terracotta);
+    transform: rotate(4deg);
+    max-width: 120px;
+    text-align: right;
+    line-height: 1.1;
+  }
+
+  /* Two registers */
+  .registers-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--s-9) 0;
+  }
+  .registers-cta .container { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink-soft); }
+  .registers-cta .panel { padding: var(--s-7); }
+  .registers-cta .panel + .panel { border-left: 1px solid var(--ink-soft); }
+  .registers-cta h3 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper-3); margin: 0 0 var(--s-4); }
+  .registers-cta .h-1 { color: var(--bone); }
+  .registers-cta p { color: var(--paper-3); max-width: 380px; }
+  .registers-cta a.btn { background: transparent; border-color: var(--paper); color: var(--paper); margin-top: var(--s-5); }
+  .registers-cta a.btn:hover { background: var(--terracotta); border-color: var(--terracotta); }
+
+  /* Methodology timeline */
+  .method {
+    padding: var(--s-9) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--s-4);
+    margin-top: var(--s-7);
+  }
+  .method-step {
+    border-top: 1px solid var(--ink);
+    padding-top: var(--s-3);
+  }
+  .method-step .ms-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-soft); }
+  .method-step .ms-title { font-family: var(--serif); font-size: 18px; font-weight: 450; line-height: 1.2; margin: 8px 0 6px; }
+  .method-step .ms-desc { font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+  .method-step .ms-month { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--terracotta); display: block; margin-top: 8px; }
+
+  /* consortium */
+  .consortium {
+    padding: var(--s-9) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .consortium-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-5);
+    margin-top: var(--s-7);
+  }
+  .partner {
+    border: 1px solid var(--rule);
+    padding: var(--s-5);
+    background: var(--bone);
+    min-height: 200px;
+  }
+  .partner .country { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--ink-soft); }
+  .partner .pname { font-family: var(--serif); font-size: 22px; line-height: 1.15; font-weight: 420; margin: 6px 0 var(--s-3); }
+  .partner .ptype { font-size: 12px; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: var(--s-3); margin-top: var(--s-3); }
+
+  @media (max-width: 980px) {
+    .hero .container,
+    .corpus .container,
+    .registers-cta .container {
+      grid-template-columns: 1fr;
+      gap: var(--s-6);
+    }
+    .hero-sub .container,
+    .featured-grid,
+    .consortium-grid {
+      grid-template-columns: 1fr;
+    }
+    .dataset-bridge .container {
+      grid-template-columns: 1fr;
+    }
+    .method-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .registers-cta .panel + .panel {
+      border-left: none;
+      border-top: 1px solid var(--ink-soft);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: var(--s-6) 0 var(--s-7);
+    }
+    .hero-sub,
+    .featured,
+    .method,
+    .consortium,
+    .registers-cta,
+    .invite {
+      padding: var(--s-7) 0;
+    }
+    .hero .stat .num {
+      font-size: 42px;
+    }
+    .invite-form {
+      grid-template-columns: 1fr;
+    }
+    .invite-form button {
+      padding: 16px 24px;
+    }
+    .method-grid {
+      grid-template-columns: 1fr;
+    }
+    .corpus-viz {
+      grid-template-columns: repeat(30, 1fr);
+    }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="02-website.html" class="brand" data-page-label="/ Corpus">
+    <img src="uploads/logo_savor_black.svg" alt="SAVOR" />
+  </a>
+  <div class="links only-nav">
+    <a href="02-website.html" class="active">Corpus</a>
+    <a href="03-search.html">Search</a>
+    <a href="04-recipe.html">A recipe</a>
+    <a href="05-dataset.html">Dataset</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow">A bilingual recipe corpus · Romania ◇ Italia</span>
+      <div class="spacer-7" style="height: 28px;"></div>
+      <h1 class="h-display">Three thousand <em style="font-variation-settings: 'opsz' 144, 'SOFT' 100; font-style: italic; color: var(--terracotta)">recipes</em>,<br>two languages,<br>one open corpus.</h1>
+      <div class="spacer-7" style="height: 28px;"></div>
+      <p class="lede" style="max-width: 620px;">SAVOR brings together interwar Romanian manuscripts, Pellegrino Artusi's 1891 cookbook, and 500 contemporary student recipes — structured, semantically annotated, and made queryable. A FAIR benchmark for the digital humanities, an invitation for the curious.</p>
+      <div class="spacer-7" style="height: 32px;"></div>
+      <div class="row">
+        <a href="03-search.html" class="btn">Begin a conversation →</a>
+        <a href="05-dataset.html" class="btn ghost">Read the schema</a>
+      </div>
+    </div>
+
+    <div class="meta-stack">
+      <div class="stat">
+        <div class="num">3,300</div>
+        <div class="lab">recipes · ro + it</div>
+      </div>
+      <div class="stat">
+        <div class="num">~180k</div>
+        <div class="lab">semantic triples</div>
+      </div>
+      <div class="stat">
+        <div class="num">M12</div>
+        <div class="lab">delivery · zenodo doi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO SUB -->
+<section class="hero-sub">
+  <div class="container">
+    <div class="item">
+      <span class="eyebrow">For digital humanists</span>
+      <p>A clean, validated corpus structured against schema.org/Recipe and FOODon. Provenance preserved per record; manuscripts cited at the folio.</p>
+    </div>
+    <div class="item">
+      <span class="eyebrow">For NLP researchers</span>
+      <p>Multilingual LaBSE embeddings, FAISS index, and a REST/SPARQL surface for cross-lingual retrieval, clustering, and zero-shot evaluation.</p>
+    </div>
+    <div class="item">
+      <span class="eyebrow">For the curious</span>
+      <p>Browse Sunday-lunch dishes from Cluj alongside Sunday-lunch dishes from Romagna. Find what changes, what doesn't, and what surprises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DATASET BRIDGE -->
+<section class="dataset-bridge">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Open data</span>
+      <h2 class="h-2">Need the schema, endpoints, SPARQL examples, or citation metadata?</h2>
+      <p>The Lab page gathers the technical surface of SAVOR: JSON structure, API routes, embedding index notes, license, and release information.</p>
+    </div>
+    <a href="05-dataset.html" class="btn">Open dataset →</a>
+  </div>
+</section>
+
+<!-- CORPUS VIZ -->
+<section class="corpus">
+  <div class="container">
+    <div>
+      <span class="eyebrow">The corpus, at a glance</span>
+      <h2 class="h-1" style="margin-top: 16px;">3,300 recipes, three sources, two languages.</h2>
+      <p style="margin-top: var(--s-4); max-width: 460px;">Each square is one recipe. Aubergine is Romanian manuscript heritage — interwar notebooks, church archives, ethnographic collections. Ochre is contemporary student cooking from USAMV Cluj. Terracotta is Pellegrino Artusi's 1891 cookbook, digitised by Casa Artusi.</p>
+      <div class="row" style="margin-top: var(--s-5); font-size: 12px; gap: var(--s-5);">
+        <span class="row" style="gap: 8px;"><span style="width:12px;height:12px;background:var(--aubergine);"></span> 2,000 · RO manuscripts</span>
+        <span class="row" style="gap: 8px;"><span style="width:12px;height:12px;background:var(--ochre);"></span> 500 · RO student</span>
+        <span class="row" style="gap: 8px;"><span style="width:12px;height:12px;background:var(--terracotta);"></span> 800 · IT Artusi</span>
+      </div>
+    </div>
+    <div>
+      <div class="corpus-viz" id="corpus-viz"></div>
+      <div class="tiny" style="margin-top: var(--s-3); display: flex; justify-content: space-between;">
+        <span>each square = one recipe</span>
+        <span>3,300 of 3,300 ingested · M9</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVITE -->
+<section class="invite">
+  <div class="container">
+    <span class="eyebrow">Semantic search</span>
+    <div class="spacer-7" style="height: 16px;"></div>
+    <h2 class="h-1" style="font-style: italic; font-variation-settings: 'opsz' 96, 'SOFT' 80;">Ask the corpus the way you'd ask a fellow gourmand.</h2>
+    <p class="lede" style="max-width: 620px; margin-left: auto; margin-right: auto;">Not a search box — a correspondence. Write to SAVOR in plain Romanian, Italian, or English. It will write back with recipes, citations, and the occasional aside.</p>
+    <form class="invite-form" onsubmit="event.preventDefault(); window.location='03-search.html';">
+      <input type="text" placeholder="What's a vegetarian dish you'd serve in Lent, somewhere in Transylvania?" />
+      <button type="submit">Begin →</button>
+    </form>
+    <div class="examples">
+      <a href="03-search.html"><em>"Christmas Eve, no meat, something my grandmother might have made."</em></a>
+      <a href="03-search.html"><em>"A pasta dish using only what's in the pantry in winter."</em></a>
+      <a href="03-search.html"><em>"Dolci che usano la polenta."</em></a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: end;">
+      <div>
+        <span class="eyebrow">Three from the corpus</span>
+        <h2 class="h-1" style="margin-top: 12px;">Cooked yesterday. Read today.</h2>
+      </div>
+      <a href="03-search.html" class="small" style="font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; font-size: 11px;">Browse all →</a>
+    </div>
+
+    <div class="featured-grid">
+      <a class="recipe-card" href="04-recipe.html">
+        <span class="num">RO · 1934 · ms.b3.f47</span>
+        <div>
+          <div class="title-ro">Plăcintă cu mere</div>
+          <div class="title-it">Sfoglia di mele</div>
+        </div>
+        <span class="scribble-cook">a fi tinută la rece o oră</span>
+        <div class="row">
+          <span class="chip region">Transilvania</span>
+          <span class="chip period">Interbelic</span>
+          <span class="chip course">Desert</span>
+        </div>
+      </a>
+
+      <a class="recipe-card" href="04-recipe.html">
+        <span class="num">IT · 1891 · Artusi 273</span>
+        <div>
+          <div class="title-ro">Tăiței la sos de carne</div>
+          <div class="title-it">Tagliatelle al ragù</div>
+        </div>
+        <span class="scribble-cook" style="transform: rotate(-3deg);">solo Parmigiano vero!</span>
+        <div class="row">
+          <span class="chip region">Emilia-Romagna</span>
+          <span class="chip period">XIX sec.</span>
+          <span class="chip course">Primo</span>
+        </div>
+      </a>
+
+      <a class="recipe-card" href="04-recipe.html">
+        <span class="num">RO · 2024 · USAMV-CJ</span>
+        <div>
+          <div class="title-ro">Ciorbă de fasole cu afumătură</div>
+          <div class="title-it">Zuppa di fagioli affumicata</div>
+        </div>
+        <span class="scribble-cook" style="transform: rotate(2deg);">mai bună a doua zi</span>
+        <div class="row">
+          <span class="chip region">Banat</span>
+          <span class="chip period">Contemporan</span>
+          <span class="chip course">Fel principal</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TWO REGISTERS CTA -->
+<section class="registers-cta">
+  <div class="container">
+    <div class="panel">
+      <h3>SAVOR / Tavola</h3>
+      <div class="h-1" style="margin: 0 0 var(--s-4);">For people who cook, teach, and curate.</div>
+      <p>The website, the search, the recipe pages, the exhibits. Warm, editorial, marginal. This is where the corpus becomes legible.</p>
+      <a href="02-website.html" class="btn">You are here →</a>
+    </div>
+    <div class="panel">
+      <h3>SAVOR / Lab</h3>
+      <div class="h-1" style="margin: 0 0 var(--s-4); font-family: var(--sans); font-weight: 500;">For people who index, embed, and infer.</div>
+      <p>The schema, the SPARQL endpoint, the embedding index, the GitHub releases. Quiet, structured, technical. The corpus as data, ready to compose with.</p>
+      <a href="05-dataset.html" class="btn">Open the lab →</a>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="method">
+  <div class="container">
+    <span class="eyebrow">From manuscript to machine</span>
+    <h2 class="h-1" style="margin-top: 12px; max-width: 700px;">Six stages, twelve months, three quality gates.</h2>
+
+    <div class="method-grid">
+      <div class="method-step">
+        <span class="ms-num">01</span>
+        <div class="ms-title">Source consolidation</div>
+        <div class="ms-desc">XML from Casa Artusi, CSV from USAMV, OCR text from Romanian archives. Harmonised in UTF-8.</div>
+        <span class="ms-month">M1 — M2</span>
+      </div>
+      <div class="method-step">
+        <span class="ms-num">02</span>
+        <div class="ms-title">Schema & validation</div>
+        <div class="ms-desc">SAVOR-JSON schema, extending schema.org/Recipe. CI workflows on GitHub for every record.</div>
+        <span class="ms-month">M1 — M4</span>
+      </div>
+      <div class="method-step">
+        <span class="ms-num">03</span>
+        <div class="ms-title">Semantic annotation</div>
+        <div class="ms-desc">spaCy + FOODon + Wikidata for ingredients. GeoNames + PeriodO for context. FAO for nutrition.</div>
+        <span class="ms-month">M3 — M7</span>
+      </div>
+      <div class="method-step">
+        <span class="ms-num">04</span>
+        <div class="ms-title">AI-readiness</div>
+        <div class="ms-desc">LaBSE multilingual embeddings, FAISS index, REST API, Docker container, Jupyter notebooks.</div>
+        <span class="ms-month">M4 — M10</span>
+      </div>
+      <div class="method-step">
+        <span class="ms-num">05</span>
+        <div class="ms-title">Quality assurance</div>
+        <div class="ms-desc">Schema validation, linguistic proofreading, expert review. 10% sample manually verified.</div>
+        <span class="ms-month">ongoing</span>
+      </div>
+      <div class="method-step">
+        <span class="ms-num">06</span>
+        <div class="ms-title">Cloud ingestion</div>
+        <div class="ms-desc">RDF/Turtle, BagIt, ECHOES Cloud PIDs, OAI-PMH endpoint, Zenodo DOI. Annual re-builds.</div>
+        <span class="ms-month">M8 — M12</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSORTIUM -->
+<section class="consortium">
+  <div class="container">
+    <span class="eyebrow">Consortium</span>
+    <h2 class="h-1" style="margin-top: 12px;">Four institutions, two countries, one corpus.</h2>
+
+    <div class="consortium-grid">
+      <div class="partner">
+        <div class="country">RO · Coordinator</div>
+        <div class="pname">Romanian Academy</div>
+        <p class="small" style="margin: 0;">Cluj-Napoca Branch — digitisation, ethnography, technical coordination.</p>
+        <div class="ptype">Cultural Heritage Institution / Archive</div>
+      </div>
+      <div class="partner">
+        <div class="country">RO</div>
+        <div class="pname">RACAI</div>
+        <p class="small" style="margin: 0;">Institute for Artificial Intelligence "Mihai Drăgănescu" — NLP pipelines, multilingual lexical resources.</p>
+        <div class="ptype">Research institute</div>
+      </div>
+      <div class="partner">
+        <div class="country">RO</div>
+        <div class="pname">USAMV Cluj-Napoca</div>
+        <p class="small" style="margin: 0;">University of Agricultural Sciences & Veterinary Medicine — food science, nutrition, contemporary corpus.</p>
+        <div class="ptype">University</div>
+      </div>
+      <div class="partner">
+        <div class="country">IT</div>
+        <div class="pname">Casa Artusi</div>
+        <p class="small" style="margin: 0;">Forlimpopoli — Pellegrino Artusi's archive, food-history scholarship, cultural communication.</p>
+        <div class="ptype">Cultural Heritage Institution / Museum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="container">
+    <div>
+      <img src="uploads/logo_savor_black.svg" alt="SAVOR" style="height: 56px; width: auto; margin-bottom: 16px;" />
+      <p class="small" style="max-width: 320px;">A bilingual Romanian–Italian recipe corpus, structured for semantic search and cultural analysis. Funded by ECHOES, the Cultural Heritage Cloud.</p>
+    </div>
+    <div>
+      <h4>Surfaces</h4>
+      <ul>
+        <li><a href="03-search.html">Semantic search</a></li>
+        <li><a href="04-recipe.html">Recipe page</a></li>
+        <li><a href="05-dataset.html">Dataset / docs</a></li>
+        <li><a href="01-design-system.html">Identity</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Consortium</h4>
+      <ul>
+        <li>Romanian Academy</li>
+        <li>RACAI</li>
+        <li>USAMV Cluj</li>
+        <li>Casa Artusi</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Open data</h4>
+      <ul>
+        <li>Zenodo · DOI</li>
+        <li>GitHub · releases</li>
+        <li>SPARQL endpoint</li>
+        <li>OAI-PMH</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Build the corpus visualization — 3,300 squares
+  (function(){
+    const viz = document.getElementById('corpus-viz');
+    if (!viz) return;
+    const cells = [];
+    // 2000 RO archive
+    for (let i = 0; i < 2000; i++) cells.push('ro-arch');
+    // 500 RO student
+    for (let i = 0; i < 500; i++) cells.push('ro-stu');
+    // 800 IT
+    for (let i = 0; i < 800; i++) cells.push('it');
+    // shuffle a tiny bit so blocks aren't too rigid — but keep the proportions visible
+    // we'll group: render in 3 bands (top: ro-arch, middle: ro-stu, bottom: it) — so the user can see proportions
+    const html = cells.map(c => `<span class="${c}"></span>`).join('');
+    viz.innerHTML = html;
+  })();
+</script>
+
+</body>
+</html>

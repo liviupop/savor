@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SAVOR — Identity</title>
+<link rel="stylesheet" href="assets/savor.css" />
+<link rel="icon" href="assets/savor-logo.svg" type="image/svg+xml" />
+<style>
+  /* page-only styles */
+  body { background: var(--paper); }
+  .ds-hero {
+    padding: var(--s-9) 0 var(--s-8);
+    border-bottom: 1px solid var(--rule);
+  }
+  .ds-hero .container { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-8); align-items: end; }
+  .ds-hero .meta { display: grid; gap: var(--s-3); font-size: 13px; }
+  .ds-hero .meta dt { color: var(--ink-soft); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .ds-hero .meta dd { margin: 0 0 var(--s-3); font-family: var(--serif); font-size: 17px; }
+
+  .section {
+    padding: var(--s-9) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: var(--s-7);
+    margin-bottom: var(--s-7);
+    align-items: start;
+  }
+  .section-head .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 8px;
+    border-top: 1px solid var(--ink);
+  }
+
+  /* Logo gallery */
+  .logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  .logo-tile {
+    aspect-ratio: 4/3;
+    display: grid; place-items: center;
+    border: 1px solid var(--rule);
+    padding: var(--s-5);
+    position: relative;
+  }
+  .logo-tile img { max-height: 60%; max-width: 70%; }
+  .logo-tile .tile-label {
+    position: absolute; bottom: 12px; left: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .tile-paper { background: var(--paper); }
+  .tile-bone { background: var(--bone); }
+  .tile-ink { background: var(--ink); }
+  .tile-terra { background: var(--terracotta); }
+  .tile-aubergine { background: var(--aubergine); }
+  .tile-lab { background: var(--lab-bg); border-color: var(--lab-rule); }
+
+  /* Type specimens */
+  .specimen { display: grid; grid-template-columns: 220px 1fr; gap: var(--s-7); padding: var(--s-6) 0; border-bottom: 1px dotted var(--rule); }
+  .specimen:last-child { border-bottom: none; }
+  .specimen .meta { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); line-height: 1.7; }
+  .specimen .meta strong { color: var(--ink); display: block; font-size: 13px; margin-bottom: 4px; font-family: var(--sans); }
+
+  /* Color swatches */
+  .swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .swatch { padding: var(--s-5); aspect-ratio: 1.4 / 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .swatch .name { font-family: var(--serif); font-size: 18px; font-weight: 400; }
+  .swatch .role { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .swatch .hex  { font-family: var(--mono); font-size: 12px; }
+  .swatch.dark  { color: var(--bone); }
+  .swatch.light { color: var(--ink); }
+
+  /* register split */
+  .register-split { display: grid; grid-template-columns: 1fr 1fr; }
+  .register-split > div { padding: var(--s-7); }
+  .register-split .tavola-side { background: var(--paper); }
+  .register-split .lab-side    { background: var(--lab-bg); border-left: 1px solid var(--rule); }
+  .register-split h3 {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-soft); margin: 0 0 var(--s-5); padding-bottom: var(--s-3); border-bottom: 1px solid var(--rule);
+  }
+  .register-split .lab-side h3 { color: var(--lab-soft); border-color: var(--lab-rule); }
+
+  /* component examples */
+  .demo {
+    background: var(--bone);
+    border: 1px solid var(--rule);
+    padding: var(--s-7);
+    position: relative;
+  }
+  .demo-label {
+    position: absolute; top: 0; left: 0;
+    background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  /* marginalia demo */
+  .marginalia-demo {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: var(--s-7);
+    padding: var(--s-7);
+    background: var(--bone);
+    border: 1px solid var(--rule);
+  }
+  .marginalia-demo .body p { margin: 0 0 var(--s-3); font-family: var(--serif); font-size: 17px; line-height: 1.6; }
+  .marginalia-demo .margins { display: grid; gap: var(--s-6); padding-top: var(--s-3); border-left: 1px dotted var(--rule); padding-left: var(--s-5); }
+
+  @media (max-width: 980px) {
+    .ds-hero .container,
+    .section-head,
+    .specimen,
+    .register-split,
+    .marginalia-demo {
+      grid-template-columns: 1fr;
+    }
+    .logo-grid,
+    .swatch-grid,
+    .small[style*="repeat(3, 1fr)"] {
+      grid-template-columns: 1fr 1fr;
+    }
+    .register-split .lab-side {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .logo-grid,
+    .swatch-grid,
+    .small[style*="repeat(3, 1fr)"],
+    div[style*="grid-template-columns: 1fr 1fr; gap: var(--s-7);"],
+    div[style*="grid-template-columns: 1fr 1fr; gap: var(--s-5);"] {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="02-website.html" class="brand" data-page-label="/ Identity">
+    <img src="uploads/logo_savor_black.svg" alt="SAVOR" />
+  </a>
+  <div class="links only-nav">
+    <a href="#logo">Logo</a>
+    <a href="#type">Type</a>
+    <a href="#color">Color</a>
+    <a href="#registers">Registers</a>
+    <a href="#components">Components</a>
+    <a href="#marginalia">Marginalia</a>
+  </div>
+</nav>
+
+<header class="ds-hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Identity · v1.1 · 2026</span>
+      <div class="spacer-7" style="height: 24px;"></div>
+      <h1 class="h-display">A bilingual recipe corpus, set in two voices.</h1>
+      <div class="spacer-7" style="height: 24px;"></div>
+      <p class="lede" style="max-width: 640px;">
+        SAVOR carries 3,300 Romanian and Italian recipes from manuscript to machine. The brand splits cleanly into two registers: <em>Tavola</em>, the public face, warm and editorial; and <em>Lab</em>, the technical face, structured and quiet. One logo, one grid, one mono — diverging on display type, color, and density.
+      </p>
+    </div>
+    <dl class="meta">
+      <dt>Project</dt><dd>Semantic AI Valorisation of Original Recipes</dd>
+      <dt>Programme</dt><dd>ECHOES — Cultural Heritage Cloud</dd>
+      <dt>Languages</dt><dd>Română · Italiano</dd>
+      <dt>Corpus</dt><dd>3,300 recipes · ~180k triples</dd>
+    </dl>
+  </div>
+</header>
+
+<!-- LOGO ============================================== -->
+<section id="logo" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">01 / Logo</span>
+      <div>
+        <h2 class="h-1">The salt-shaker stands in for the A.</h2>
+        <p class="lede" style="max-width: 580px;">A monoline wordmark with a single, quiet substitution. Reads as serif when small, as drawing when large. Use on warm neutrals first; reserve full pigment fields for moments of emphasis.</p>
+      </div>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-tile tile-paper"><img src="uploads/logo_savor_black.svg" alt="SAVOR" /><span class="tile-label">Paper · primary</span></div>
+      <div class="logo-tile tile-bone"><img src="uploads/logo_savor_black.svg" alt="SAVOR" /><span class="tile-label">Bone · publication</span></div>
+      <div class="logo-tile tile-lab"><img src="uploads/logo_savor_black.svg" alt="SAVOR" /><span class="tile-label">Lab background</span></div>
+      <div class="logo-tile tile-ink"><img src="uploads/logo_savor_white.svg" alt="SAVOR" /><span class="tile-label">Ink · default reverse</span></div>
+      <div class="logo-tile tile-terra"><img src="uploads/logo_savor_white.svg" alt="SAVOR" /><span class="tile-label">Terracotta · feature</span></div>
+      <div class="logo-tile tile-aubergine"><img src="uploads/logo_savor_white.svg" alt="SAVOR" /><span class="tile-label">Aubergine · archive</span></div>
+    </div>
+
+    <div class="spacer-7"></div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7);">
+      <div class="demo">
+        <div class="demo-label">Lockup A — wordmark</div>
+        <div style="margin-top: 32px; display: grid; place-items: center; padding: var(--s-7);">
+          <img src="uploads/logo_savor_black.svg" alt="SAVOR" style="height: 80px;" />
+        </div>
+      </div>
+      <div class="demo">
+        <div class="demo-label">Lockup B — with descriptor</div>
+        <div style="margin-top: 32px; display: grid; place-items: center; padding: var(--s-6);">
+          <img src="uploads/logo_savor_black.svg" alt="SAVOR" style="height: 60px;" />
+          <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--rule); width: 240px; text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft);">
+            Recipes · Romania · Italia
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer-7"></div>
+    <div class="small" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); max-width: 900px;">
+      <div><strong style="color: var(--ink); display:block; font-family: var(--sans); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px;">Clear space</strong>Equal to the height of the salt-shaker on all sides.</div>
+      <div><strong style="color: var(--ink); display:block; font-family: var(--sans); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px;">Min. size</strong>16 px digital · 12 mm print. Never tighter.</div>
+      <div><strong style="color: var(--ink); display:block; font-family: var(--sans); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px;">Don't</strong>Recolor the shaker. Stretch. Outline. Drop-shadow. Lay over busy imagery.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE ============================================== -->
+<section id="type" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">02 / Type</span>
+      <div>
+        <h2 class="h-1">A modern serif with character, set against a humanist sans.</h2>
+        <p class="lede" style="max-width: 580px;">Fraunces gives the bilingual titling its sharpness and warmth — equally at home in Romanian and Italian. Montserrat handles UI and Lab body. JetBrains Mono carries data, code, and metadata. Three different hands appear only in the margins.</p>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Display Serif</strong>
+        Fraunces<br>opsz 144 · wght 380<br>tracking −0.02em<br>
+        <span style="color: var(--terracotta)">use:</span> Tavola headlines, recipe titles, hero
+      </div>
+      <div>
+        <div class="h-display">Plăcintă cu mere</div>
+        <div class="h-display" style="color: var(--ink-soft); margin-top: 8px;">Tagliatelle al ragù</div>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Heading 1</strong>
+        Fraunces · 56px · 400<br>
+        <span style="color: var(--terracotta)">use:</span> section titles
+      </div>
+      <div>
+        <div class="h-1">Three thousand recipes, two languages, one open corpus.</div>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Lede / Italic</strong>
+        Fraunces italic · 24px · 350<br>
+        <span style="color: var(--terracotta)">use:</span> standfirsts, blockquotes
+      </div>
+      <div>
+        <p class="lede" style="margin: 0;">From an interwar Transylvanian notebook to Pellegrino Artusi's 1891 cookbook — the corpus is what happens when archives become queryable.</p>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Body Sans</strong>
+        Montserrat · 17px · 400<br>line 1.55<br>
+        <span style="color: var(--terracotta)">use:</span> running text, UI
+      </div>
+      <div style="max-width: 560px;">
+        <p style="margin: 0;">Each recipe is modelled as a miniature heritage digital twin — linking the tangible carrier (manuscript page or born-digital file) with its intangible know-how: ingredients, steps, regional context, festive occasion. The metadata spine is Qualified Dublin Core; the culinary detail extends schema.org/Recipe and FOODon.</p>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Mono</strong>
+        JetBrains Mono · 13px<br>
+        <span style="color: var(--terracotta)">use:</span> code, JSON, schema, metadata, lab register
+      </div>
+      <div class="mono small" style="color: var(--ink); font-size: 14px; line-height: 1.65;">
+        <span class="tk-com">// SAVOR-JSON · extends schema.org/Recipe</span><br>
+        <span class="tk-key">"recipeId"</span><span class="tk-pun">:</span> <span class="tk-str">"sav:ro/cluj/1934/placinta-mere"</span><span class="tk-pun">,</span><br>
+        <span class="tk-key">"region"</span><span class="tk-pun">:</span> <span class="tk-str">"geonames:665087"</span> <span class="tk-com">// Cluj</span>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="meta">
+        <strong>Bilingual block</strong>
+        Always RO ◇ IT<br>thin rule between<br>
+        <span style="color: var(--terracotta)">use:</span> recipe headers, exhibits
+      </div>
+      <div class="bilingual" style="max-width: 720px;">
+        <div class="lang-ro">
+          <span class="lang-tag">RO · romana</span>
+          <div class="h-2">Sarmale cu varză murată</div>
+        </div>
+        <div class="rule"></div>
+        <div class="lang-it">
+          <span class="lang-tag">IT · italiano</span>
+          <div class="h-2">Involtini di cavolo fermentato</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR ============================================== -->
+<section id="color" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">03 / Color</span>
+      <div>
+        <h2 class="h-1">Pigments from both sides of the corpus.</h2>
+        <p class="lede" style="max-width: 580px;">Every color earns a semantic role. Mediterranean and Carpathian palettes set side by side: terracotta and indigo for the shared interactive thread; ochre and aubergine carrying the Romanian archival weight; olive and saffron held in reserve for life inside recipe pages. Lab uses the same accents, dialed down.</p>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom: 12px;">Neutrals</div>
+    <div class="swatch-grid">
+      <div class="swatch light" style="background: var(--bone);"><span class="name">Bone</span><span><span class="role">surface · panel</span><br><span class="hex">#FFFFFF</span></span></div>
+      <div class="swatch light" style="background: var(--paper);"><span class="name">Paper</span><span><span class="role">tavola page</span><br><span class="hex">#FFFFFF</span></span></div>
+      <div class="swatch light" style="background: var(--paper-2);"><span class="name">Paper II</span><span><span class="role">page variant</span><br><span class="hex">#FFFFFF</span></span></div>
+      <div class="swatch dark" style="background: var(--ink);"><span class="name">Ink</span><span><span class="role">type · primary</span><br><span class="hex">#1A1714</span></span></div>
+    </div>
+
+    <div class="spacer-7"></div>
+    <div class="eyebrow" style="margin-bottom: 12px;">Pigments</div>
+    <div class="swatch-grid">
+      <div class="swatch dark" style="background: var(--terracotta);"><span class="name">Terracotta</span><span><span class="role">interactive · IT</span><br><span class="hex">#B8523A</span></span></div>
+      <div class="swatch dark" style="background: var(--ochre);"><span class="name">Ochre</span><span><span class="role">region · RO</span><br><span class="hex">#C98E2B</span></span></div>
+      <div class="swatch dark" style="background: var(--olive);"><span class="name">Olive</span><span><span class="role">vegetal · diet</span><br><span class="hex">#6E7A3A</span></span></div>
+      <div class="swatch dark" style="background: var(--aubergine);"><span class="name">Aubergine</span><span><span class="role">archive · period</span><br><span class="hex">#5A3A4A</span></span></div>
+      <div class="swatch dark" style="background: var(--indigo);"><span class="name">Indigo</span><span><span class="role">link · citation</span><br><span class="hex">#2D4A6B</span></span></div>
+      <div class="swatch light" style="background: var(--saffron);"><span class="name">Saffron</span><span><span class="role">selection · highlight</span><br><span class="hex">#E0A847</span></span></div>
+      <div class="swatch light" style="background: var(--lab-bg); border: 1px solid var(--rule);"><span class="name">Lab BG</span><span><span class="role">lab register</span><br><span class="hex">#FFFFFF</span></span></div>
+      <div class="swatch dark" style="background: var(--lab-mark);"><span class="name">Lab Mark</span><span><span class="role">code · data</span><br><span class="hex">#1F3A5F</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTERS ============================================== -->
+<section id="registers" class="section" style="padding: 0; border-bottom: 1px solid var(--rule);">
+  <div class="container" style="padding-top: var(--s-9); padding-bottom: var(--s-7);">
+    <div class="section-head">
+      <span class="label">04 / Registers</span>
+      <div>
+        <h2 class="h-1">Tavola is for people. Lab is for machines and the people who feed them.</h2>
+      </div>
+    </div>
+  </div>
+  <div class="register-split">
+    <div class="tavola-side">
+      <h3>SAVOR / Tavola</h3>
+      <div class="h-display" style="font-size: 64px; line-height: 1;">Plăcintă<br>cu mere</div>
+      <p class="lede" style="margin-top: 16px; max-width: 360px;">A pie of apple, sugar, and lemon zest, baked until the crust takes on the colour of a winter afternoon.</p>
+      <div class="row" style="margin-top: var(--s-5);">
+        <span class="chip region">Transilvania</span>
+        <span class="chip period">1934</span>
+        <span class="chip festive">Sf. Maria</span>
+        <span class="chip course">Desert</span>
+      </div>
+      <div style="margin-top: var(--s-6); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);">
+        Display: Fraunces · Body: Montserrat · Surface: Paper
+      </div>
+    </div>
+    <div class="lab-side lab">
+      <h3>SAVOR / Lab</h3>
+      <div class="h-display" style="font-size: 56px;">recipe.<br>placinta-mere</div>
+      <p class="lede" style="margin-top: 16px; max-width: 360px;">SAVOR-JSON record · 14 ingredients · 7 steps · LaBSE-embedded · validated against schema.org/Recipe + FOODon.</p>
+      <div class="row" style="margin-top: var(--s-5);">
+        <span class="chip lab-tag">RO/IT</span>
+        <span class="chip lab-tag">CC BY-SA</span>
+        <span class="chip lab-tag">v1.0.3</span>
+        <span class="chip lab-tag">PID:rd-2034</span>
+      </div>
+      <div style="margin-top: var(--s-6); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lab-soft);">
+        Display: Montserrat · Body: Montserrat · Surface: Lab BG
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTS ============================================== -->
+<section id="components" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">05 / Components</span>
+      <div>
+        <h2 class="h-1">A small kit, used consistently.</h2>
+        <p class="lede" style="max-width: 580px;">Chips carry semantic metadata in distinct pigments. Buttons stay quiet — ink default, terracotta on hover. Cards are flat, ruled, with breathing room. Code blocks belong to Lab.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5);">
+      <div class="demo">
+        <div class="demo-label">Chips · semantic tags</div>
+        <div style="margin-top: 24px;" class="row">
+          <span class="chip region">Emilia-Romagna</span>
+          <span class="chip region">Banat</span>
+          <span class="chip period">XIX sec.</span>
+          <span class="chip period">Interbelic</span>
+          <span class="chip course">Primo</span>
+          <span class="chip course">Fel principal</span>
+          <span class="chip diet">Vegetariano</span>
+          <span class="chip festive">Crăciun</span>
+          <span class="chip festive">Carnevale</span>
+          <span class="chip lang">RO</span>
+          <span class="chip lang">IT</span>
+        </div>
+      </div>
+
+      <div class="demo">
+        <div class="demo-label">Buttons</div>
+        <div style="margin-top: 24px;" class="row">
+          <button class="btn">Search the corpus</button>
+          <button class="btn ghost">Read methodology</button>
+          <a class="btn" href="#">Download JSON ↓</a>
+        </div>
+      </div>
+
+      <div class="demo" style="grid-column: span 2;">
+        <div class="demo-label">JSON record · Lab</div>
+        <pre style="margin-top: 24px;"><span class="tk-com">// SAVOR-JSON · /recipes/ro/cluj/1934/placinta-mere.json</span>
+{
+  <span class="tk-key">"@context"</span>: <span class="tk-str">"https://savor.eu/context.jsonld"</span>,
+  <span class="tk-key">"@type"</span>: <span class="tk-str">"Recipe"</span>,
+  <span class="tk-key">"recipeId"</span>: <span class="tk-str">"sav:ro/cluj/1934/placinta-mere"</span>,
+  <span class="tk-key">"name"</span>: {
+    <span class="tk-key">"ro"</span>: <span class="tk-str">"Plăcintă cu mere"</span>,
+    <span class="tk-key">"it"</span>: <span class="tk-str">"Torta di mele"</span>
+  },
+  <span class="tk-key">"recipeYield"</span>: <span class="tk-num">8</span>,
+  <span class="tk-key">"region"</span>: <span class="tk-str">"geonames:665087"</span>,
+  <span class="tk-key">"period"</span>: <span class="tk-str">"periodo:p0qhvzd"</span>,
+  <span class="tk-key">"festive"</span>: [<span class="tk-str">"wd:Q3406641"</span>],
+  <span class="tk-key">"ingredients"</span>: [
+    { <span class="tk-key">"food"</span>: <span class="tk-str">"foodon:00001275"</span>, <span class="tk-key">"qty"</span>: <span class="tk-num">6</span>, <span class="tk-key">"unit"</span>: <span class="tk-str">"piece"</span> },
+    { <span class="tk-key">"food"</span>: <span class="tk-str">"foodon:00001286"</span>, <span class="tk-key">"qty"</span>: <span class="tk-num">300</span>, <span class="tk-key">"unit"</span>: <span class="tk-str">"g"</span> }
+  ],
+  <span class="tk-key">"license"</span>: <span class="tk-str">"CC0-1.0"</span>,
+  <span class="tk-key">"provenance"</span>: <span class="tk-str">"AR-CJ ms.1934.b3.f47"</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARGINALIA ============================================== -->
+<section id="marginalia" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">06 / Marginalia</span>
+      <div>
+        <h2 class="h-1">Three hands in the margin.</h2>
+        <p class="lede" style="max-width: 580px;">Recipes carry voices that don't belong in the corpus body. We give them their own space — and their own handwriting. The cook leaves quick warnings in terracotta. The scholar pencils in dates and provenance, slightly skewed. The translator notes glosses in a slow, deliberate italic.</p>
+      </div>
+    </div>
+
+    <div class="marginalia-demo">
+      <div class="body">
+        <p>Punei mărul curățat și tăiat felii într-o cratiță cu untul, zahărul și coaja de lămâie. Lasă să fiarbă încet până când felii încep să-și piardă forma, dar nu se prefac în piure.</p>
+        <p>Întinde aluatul subțire ca o monedă, așază merele în mijloc, închide marginile și coace la cuptor încins, până capătă culoarea unei după-amiezi de noiembrie.</p>
+      </div>
+      <div class="margins">
+        <div class="margin-note cook">
+          mai pune o lingură de scorțișoară — întotdeauna mai bună așa.
+          <span class="signoff">— bunica</span>
+        </div>
+        <div class="margin-note scholar">
+          ms. 1934, f.47v;<br>cf. caietul Mariei P.,<br>1928, Sângeorz.
+          <span class="signoff">— C.M.</span>
+        </div>
+        <div class="margin-note translator">
+          „plăcintă" — qui non è propriamente una "torta" ma più vicino a una sfoglia ripiena.
+          <span class="signoff">— trad.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer-7"></div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5);">
+      <div>
+        <span class="eyebrow">The cook</span>
+        <div class="margin-note cook" style="margin-top: 12px;">a handful, no more</div>
+        <p class="small" style="margin-top: 16px;">Caveat · 22px · terracotta. Quick, kitchen-side. Practical advice that didn't make the recipe.</p>
+      </div>
+      <div>
+        <span class="eyebrow">The scholar</span>
+        <div class="margin-note scholar" style="margin-top: 12px;">cf. CoRoLa §3.2</div>
+        <p class="small" style="margin-top: 16px;">Reenie Beanie · 24px · aubergine, slightly skewed. Provenance, citations, dating.</p>
+      </div>
+      <div>
+        <span class="eyebrow">The translator</span>
+        <div class="margin-note translator" style="margin-top: 12px;">untranslatable;<br>see footnote 4.</div>
+        <p class="small" style="margin-top: 16px;">Homemade Apple · 14px · indigo. Cross-language glosses, semantic notes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER ============================================== -->
+<footer class="foot">
+  <div class="container">
+    <div>
+      <img src="uploads/logo_savor_black.svg" alt="SAVOR" style="height: 28px; margin-bottom: 12px;" />
+      <p class="small" style="max-width: 320px;">A bilingual Romanian–Italian recipe corpus, structured for semantic search and cultural analysis. Funded by ECHOES, the Cultural Heritage Cloud.</p>
+    </div>
+    <div>
+      <h4>Surfaces</h4>
+      <ul>
+        <li><a href="02-website.html">Website</a></li>
+        <li><a href="03-search.html">Semantic search</a></li>
+        <li><a href="04-recipe.html">Recipe page</a></li>
+        <li><a href="05-dataset.html">Dataset / docs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Consortium</h4>
+      <ul>
+        <li>Romanian Academy</li>
+        <li>RACAI</li>
+        <li>USAMV Cluj</li>
+        <li>Casa Artusi</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Open data</h4>
+      <ul>
+        <li>Zenodo · DOI</li>
+        <li>GitHub · releases</li>
+        <li>SPARQL endpoint</li>
+        <li>OAI-PMH</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

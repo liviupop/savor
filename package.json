@@ -1,0 +1,9 @@
+{
+  "name": "savor-site",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "deploy": "npx --cache /private/tmp/savor-npm-cache wrangler pages deploy . --project-name=savor --branch=main"
+  }
+}

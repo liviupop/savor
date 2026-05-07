@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers — see
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  Link: </sitemap.xml>; rel="sitemap"; type="application/xml"
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+
+/.well-known/agent-skills/index.json
+  Content-Type: application/json; charset=utf-8
